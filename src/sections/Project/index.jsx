@@ -16,8 +16,8 @@ const Project = () => {
             <h3>Projects</h3>
           </Col>
         </Row>
-        <Row>
-          <Col>
+        <Row className="justify-content-center">
+          <Col md={6}>
             <div className='body'>
               <div>
                 <h3>Weather Dashboard</h3>
@@ -26,7 +26,7 @@ const Project = () => {
                 <p>The site will retrive current location or searched location's current weather and 
                   forcast for 5 day(if it still free trial left otherwise 3days). 
                 </p>
-                <a className='btn btn-outline-dark' href='/' target="_blank">Take Me to the Demo</a>
+                <a className='btn btn-outline-dark' href='https://seahorse-app-al36d.ondigitalocean.app/' target="_blank">Take Me to the Demo</a>
               </div>
             </div>
           </Col>
