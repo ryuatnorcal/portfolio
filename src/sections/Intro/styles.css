@@ -1,0 +1,26 @@
+.Intro{
+	background:url(./imgs/city.jpg) no-repeat center center;
+	background-attachment:fixed;
+	height:100vh;
+  margin-top: 0;
+}
+.crest_wrapper {
+  display: flex;
+  /* width: 100vw; */
+  height: 100vh;
+  justify-content: center;
+  align-items: center;
+}
+.crest {
+  min-width: 325px;
+  background: #000
+}
+.inner_crest{
+	border: 5px solid #FFF;
+	color:#FFF;
+  margin: 2%;
+	border-bottom-left-radius: 20px;
+	border-top-right-radius :20px; 
+	text-align: center;
+}
+

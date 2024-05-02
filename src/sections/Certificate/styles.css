@@ -1,0 +1,15 @@
+.certificate {
+  margin: 10vh;
+  min-height: 60vh;
+}
+.certificate .header {
+  text-align: center;
+  font-size: 5rem;
+  padding: 2rem;
+}
+.certificate .carousel {
+  height: 40vh;
+}
+.certificate .carousel img {
+  max-width: 400px;
+}

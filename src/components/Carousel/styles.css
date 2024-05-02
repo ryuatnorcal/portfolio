@@ -1,0 +1,42 @@
+.Bio .carousel-indicators {
+  top: 60vh;
+}
+
+.Bio .carousel-inner {
+  padding-left: 2.5rem;
+  padding-right: 2.5rem;
+}
+.Bio .contentContainer {
+  min-height:385px;
+  padding: 2rem;
+}
+.Experience .contentContainer {
+  min-height:385px;
+  padding: 2rem;
+}
+.Experience .techIcon {
+  text-align: center;
+  padding: 2rem
+}
+.Experience .techIcon i {
+  font-size: 2rem;
+  
+}
+.certificate .imageWrapper {
+  display: flex;
+  justify-content: center;
+}
+.certificate .certificate-image {
+  width: 30vw;
+}
+
+
+@media (max-width: 991px) {
+  .carousel-indicators {
+    display: none;
+  }
+
+  .Bio .contentContainer {
+    min-height:385px;
+  }
+}
