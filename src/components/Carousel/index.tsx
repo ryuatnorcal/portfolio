@@ -79,15 +79,17 @@ const Carousel = ({ carouselData, type }: CarouselTypes) => {
     return (
       <RBCarousel.Item key={`item-${index}`} > 
         <Container className="contentContainer">
-          <Row>
-            <Col xs="12">
+          <Row className="justify-content-center">
+            <Col xs="6">
+              <div className="imageWrapper">
+                <img className="certificate-image" src={`./${data.img}`} />
+              </div>
+            </Col>
+            <Col xs="6">
               <h3>{ data.title }</h3>
               {data.desc && (
                 <p>{data.desc}</p>
               )}
-              <div className="imageWrapper">
-                <img className="certificate-image" src={`./${data.img}`} />
-              </div>
             </Col>
           </Row>
         </Container>
