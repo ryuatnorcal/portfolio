@@ -1,6 +1,7 @@
 .certificate {
-  margin: 10vh;
+  padding: 5rem;
   min-height: 60vh;
+  background: #FFF;
 }
 .certificate .header {
   text-align: center;

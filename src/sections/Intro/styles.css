@@ -1,8 +1,16 @@
 .Intro{
-	background:url(./imgs/city.jpg) no-repeat center center;
-	background-attachment:fixed;
+	/* background:url(./imgs/city.jpg) no-repeat center center; */
+	/* background-attachment:fixed; */
+  background-position: scroll;
 	height:100vh;
   margin-top: 0;
+}
+.Intro .background {
+  height: 100vh;
+  width: 100vw;
+  background:url(./imgs/city.jpg) no-repeat center center;
+  position: fixed;
+  z-index:-1
 }
 .crest_wrapper {
   display: flex;

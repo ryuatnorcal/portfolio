@@ -1,6 +1,7 @@
 .Bio {
   min-height: 100vh;
   display: block;
+	background-color: #FFF;
 }
 .bioContainer {
   padding-top: 10%

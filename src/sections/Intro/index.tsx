@@ -12,6 +12,7 @@ const Intro = ({ enable }: IntroType) => {
   if ( !enable ) return null
   return (
     <section className='Intro'>
+      <div className='background'></div>
       <Container>
         <Row className='justify-content-center'>
           <Col xs={12}>
