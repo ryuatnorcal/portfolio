@@ -28,7 +28,7 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
-    "build:digitalocean": "npm install --production=true --legacy-peer-deps && npm run build && npm ci --legacy-peer-deps"
+    "build:digitalocean": "npm cache clean --force && npm install --legacy-peer-deps && npm run build && npm ci"
   },
   "eslintConfig": {
     "extends": [
@@ -43,7 +43,10 @@
     "@types/react-dom": "^18",
     "eslint": "^8",
     "eslint-config-next": "14.1.4",
-    "typescript": "^5.4.5"
+    "typescript": "^5.0.2"
+  },
+  "overrides": {
+    "typescript": "^5.0.2"
   },
   "browserslist": {
     "production": [
