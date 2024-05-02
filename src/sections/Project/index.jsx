@@ -9,7 +9,7 @@ const Project = () => {
 
   return (
     <section className="Project">
-      <Container fluid>
+      <Container>
         <Row className="justify-content-center">
           <Col className="header">
             <FontAwesomeIcon icon={ faLightbulb } />
@@ -17,7 +17,7 @@ const Project = () => {
           </Col>
         </Row>
         <Row className="justify-content-center">
-          <Col md={6}>
+          <Col lg={8}>
             <div className='body'>
               <div>
                 <h3>Weather Dashboard</h3>
