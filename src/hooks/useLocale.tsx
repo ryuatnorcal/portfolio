@@ -10,10 +10,15 @@ type LocaleProviderProps = {
   children: React.ReactNode
 }
 
-export const LocaleContext = createContext<LocaleProps|null>(null);
+const initialLocalProps = {
+  locale: "en",
+  setLocale: () => {}
+}
+
+export const LocaleContext = createContext<LocaleProps>(initialLocalProps);
 
 export const LocaleProvider = ({ children }: LocaleProviderProps) => {
-  const [locale, setLocale] = useState("en");
+  const [locale, setLocale] = useState<string>("en");
 
   const localeProps = {
     locale,

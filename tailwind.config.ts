@@ -14,7 +14,11 @@ const config: Config = {
         'bg-dark-500': '#0f0f0f',
         'bg-dark-700': '#000000'
       },
+      minHeight: {
+        'screen-footer': 'calc(100vh - 9.85rem)',
+      },
       spacing: {
+        '5p': '5rem',
         '10p': '10rem',
       },
       letterSpacing: {

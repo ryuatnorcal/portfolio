@@ -6,7 +6,7 @@ import ts from '../../../public/icons/icons8-typescript.svg'
 import js from '../../../public/icons/icons8-javascript.svg'
 export const Tech = () => {
   return (
-    <div className="flex flex-col justify-start w-10/12 md:w-8/12 lg:w-6/12 pb-10p">
+    <div className="flex flex-col justify-start w-10/12 md:w-8/12 xl:w-6/12 pb-10p">
       <h1 className="text-4xl font-bold tracking-md mb-5 underline">TECH STACK</h1>
       <div className="grid grid-cols-1 text-xl items-center flex tracking-sm leading-relaxed mt-5 mb-5">
         <h3 className="text-2xl font-bold">Frontend</h3>

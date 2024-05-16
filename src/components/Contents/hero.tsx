@@ -3,7 +3,7 @@ type HeroProps = {
 }
 export const Hero = ({}:HeroProps) => {
   return (
-    <div className="w-10/12 md:w-8/12 lg:w-6/12 pt-10p pb-10p">
+    <div className="w-10/12 md:w-8/12 xl:w-6/12 pt-10p pb-10p">
       <span className="text-4xl sm:text-8xl lg:text-9xl block font-bold tracking-wider mb-5">
         FullStack Developer
       </span>
@@ -12,6 +12,9 @@ export const Hero = ({}:HeroProps) => {
       </span>
       <span className="text-2xl sm:text-5xl block font-bold tracking-wider leading-loose">
         Developer onDemand
+      </span>
+      <span className="text-md block md:font-bold tracking-wider leading-loose">
+        From Calgary AB, Canada
       </span>
     </div>
   )
