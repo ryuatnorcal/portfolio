@@ -1,10 +1,12 @@
 'use client'
-import {FormEvent} from 'react'
+import {useState} from 'react'
 
 
 const Email = () => {
+  const [error, setError] = useState<string | null>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setError(null);
     const formData = new FormData(event.currentTarget);
   
     const endpoint = '/api/email';
@@ -14,11 +16,15 @@ const Email = () => {
     };
     const response = await fetch(endpoint, options);
     const result = await response.json();
-    console.log(`result: ${result}`);
+
+    if (result.status === 'error') {
+      setError(result.data.message);
+    }
   }
   return (
     <div className="max-w-md mx-auto">
       <form onSubmit={handleSubmit} className="bg-white rounded px-8 pt-6 pb-8 mb-4">
+      {error && <p className="text-red-500">{error}</p>}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             Email

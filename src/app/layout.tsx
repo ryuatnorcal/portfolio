@@ -3,7 +3,7 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import Menu from "@/components/Menu";
 import Email from "@/components/Email";
-
+import {LocaleProvider} from "@/hooks/useLocale";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -19,9 +19,11 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Menu />
-        {children}
-        <Email />
+        <LocaleProvider>
+          <Menu />
+          {children}
+          <Email />
+        </LocaleProvider>
       </body>
     </html>
   );

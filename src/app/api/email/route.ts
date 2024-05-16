@@ -2,7 +2,7 @@
 import { NextApiRequest } from 'next'
 import { NextResponse } from 'next/server'
 import { MailerSend, EmailParams, Sender, Recipient } from 'mailersend'
-
+import Error from '@/utils/error'
 type ResponseData = {
   message: string
 }
@@ -15,6 +15,19 @@ export const POST = async (
     const name = formData.get('name')
     const email = formData.get('email')
     const message = formData.get('message')
+
+    if (email === null || email === '' || !email.match(/^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/)) {
+      return Error('Invalid Email')
+    }
+
+    if (name === null || name === '') {
+      console.log('Name is required')
+      return Error('Name is required')
+    }
+
+    if (message === null || message === '') {
+      return Error('Message is required')
+    }
 
 
 

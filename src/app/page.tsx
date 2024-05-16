@@ -12,9 +12,6 @@ export default function Home() {
       <Page sectionName="tech">
         <Tech />
       </Page>
-      <Page sectionName="approach">
-        approach
-      </Page>
     </main>
   );
 }
