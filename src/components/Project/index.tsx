@@ -28,7 +28,7 @@ const Project = ({ data }: {data: ProjectType[]}) => {
         onClick={()=>onClickCard(prj)}
       >
         
-        <span className="underline font-semibold">{ prj.title }</span>
+        <span className="underline font-bold text-2xl">{ prj.title }</span>
         <p>{ prj.year }</p>
         <p className="mt-3">
           { prj.description }
