@@ -1,6 +1,6 @@
 'use client'
 
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useState, useEffect } from "react";
 
 type LocaleProps = {
   locale: string,
@@ -11,15 +11,20 @@ type LocaleProviderProps = {
 }
 
 const initialLocalProps = {
-  locale: "en",
+  locale: 'en',
   setLocale: () => {}
 }
 
 export const LocaleContext = createContext<LocaleProps>(initialLocalProps);
 
 export const LocaleProvider = ({ children }: LocaleProviderProps) => {
-  const [locale, setLocale] = useState<string>("en");
+  const [init, setInit] = useState(false)
+  const [locale, setLocale] = useState<string>('en');
 
+  useEffect(() => {
+    const detectedLanguage = window && window.navigator.language === 'ja' ? 'jp' : 'en'
+    setLocale(detectedLanguage)
+  },[init])
   const localeProps = {
     locale,
     setLocale

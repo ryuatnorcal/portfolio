@@ -1,13 +1,13 @@
-import { Bio } from "@/models/bio";
+import { TechStack } from "@/models/techstack";
 import { connectToDb } from "@/utils/mongoose";
 import { NextResponse, NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
   try {
     connectToDb()
-    const bio = await Bio.find()
+    const bio = await TechStack.find()
     return NextResponse.json(bio)
   } catch (error) {
-    throw new Error('Failed to fetch bio')
+    throw new Error('Failed to fetch TechStack')
   }
 }

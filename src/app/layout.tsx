@@ -4,7 +4,8 @@ import "./globals.css";
 import Menu from "@/components/Menu";
 import Email from "@/components/Email";
 import Footer from "@/components/Footer";
-import {LocaleProvider} from "@/hooks/useLocale";
+import { LocaleProvider, useLocale } from "@/hooks/useLocale";
+import { ContentProvider } from "@/hooks/useContent";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
