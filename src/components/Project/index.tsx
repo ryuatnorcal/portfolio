@@ -1,12 +1,12 @@
 import { useState } from "react"
-import { ProjectType } from "@/const"
+import { ProjectType,ProjectModalType } from "@/const"
 import Modal from "../Modal"
 const Project = ({ data }: {data: ProjectType[]}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
-  const [selectedData, setSelection] = useState({})
+  const [selectedData, setSelection] = useState<ProjectModalType | {}>({})
   if (!data) return null
   const onClickCard = (data: ProjectType): void => {
-    const {modal} = data
+    const { modal = {} } = data || {}
     setSelection(modal)
     setIsModalOpen(true)
   }

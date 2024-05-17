@@ -4,8 +4,8 @@ import { Bio, Experience, Project, Hire } from '@/components/Contents'
 import { useContent } from "@/hooks/useContent";
 import Loading from '../loading'
 const AboutContent = () => {
-  const { isLoadig } = useContent()
-  return !isLoadig ? (
+  const { isLoading } = useContent()
+  return !isLoading ? (
     <main className="flex-row items-center justify-center ">
       <Page sectionName="about">
         <Bio />

@@ -110,3 +110,176 @@ export const contactContent: contactContentType = {
     msg: 'できるだけ早く返信いたします。'
   }
 }
+
+export const initialContentProps = {
+  isLoading: true,
+  bio: {
+    en: {
+      name: '',
+      title: '',
+      description: '',
+      locale: 'en'
+    },
+    jp: {
+      name: '',
+      title: '',
+      description: '',
+      locale: 'jp'
+    }
+  },
+  experience: {
+    en: [
+      { id: '',
+        title: '',
+        years: '',
+        company: '',
+        description: '',
+        locale: 'en'
+      }
+    ],
+    jp: [
+      { id: '',
+        title: '',
+        years: '',
+        company: '',
+        description: '',
+        locale: 'jp'
+      }
+    ]
+  },
+  project: {
+    en: [{
+      id: '',
+      title: '',
+      year: '',
+      description: '',
+      link: '',
+      locale: 'en'
+    }],
+    jp: [
+      {
+        id: '',
+        title: '',
+        year: '',
+        description: '',
+        link: '',
+        locale: 'jp'
+      }
+    ]
+  },
+  techStack: {
+    frontend: {
+      en: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ],
+      jp: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ]
+    },
+    backend: {
+      en: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ],
+      jp: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ]
+    },
+    devops: {
+      en: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ],
+      jp: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ]
+    },
+    tools: {
+      en: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ],
+      jp: [
+        {
+          id: '',
+          label: '',
+          name: '',
+          icon: '',
+          locale: 'en',
+        }
+      ]
+    }
+    
+  },
+  hero: {
+    en: {
+      catchphrase: '',
+      location: '',
+      subtitle: '',
+      title: '',
+    },
+    jp: {
+      catchphrase: '',
+      location: '',
+      subtitle: '',
+      title: '',
+    }
+  },
+  service: {
+    en: [''],
+    jp: ['']
+  },
+  email_labels: {
+    en: {
+      name:'',
+      email:'',
+      message:'',
+      submit:'',
+    },
+    jp: {
+      name:'',
+      email:'',
+      message:'',
+      submit:'',
+    }
+  }
+}

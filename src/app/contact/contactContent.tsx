@@ -4,9 +4,9 @@ import { useContent } from "@/hooks/useContent";
 import Loading from '../loading'
 import {contactContent} from "../../consts";
 const ContactContent = ({locale}: {locale: string}) => {
-  const { isLoadig } = useContent()
+  const { isLoading } = useContent()
   const { catchphrase, msg } = contactContent[locale] || {}
-  return !isLoadig ? (
+  return !isLoading ? (
     <main className="flex flex-row items-center justify-center ">
       <Page sectionName="contact">
         <div className="pt-10p">

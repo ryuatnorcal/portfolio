@@ -18,7 +18,7 @@ const initialLocalProps = {
 export const LocaleContext = createContext<LocaleProps>(initialLocalProps);
 
 export const LocaleProvider = ({ children }: LocaleProviderProps) => {
-  const [init, setInit] = useState(false)
+  const [init, setInit] = useState<boolean>(false)
   const [locale, setLocale] = useState<string>('en');
 
   useEffect(() => {

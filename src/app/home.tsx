@@ -4,9 +4,9 @@ import { Hero, Service, Tech } from "@/components/Contents";
 import { useContent } from "@/hooks/useContent";
 import Loading from './loading'
 const Home = () => {
-  const { isLoadig } = useContent()
+  const { isLoading } = useContent()
   
-  return !isLoadig ? (
+  return !isLoading ? (
     <main className="flex-row min-h-screen items-center justify-center ">
       <Page sectionName="hero">
         <Hero />

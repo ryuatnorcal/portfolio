@@ -1,8 +1,9 @@
-interface BioType {
+
+export interface BioType {
   name: string,
   title: string,
   description: string,
-  locale: ['en', 'jp']
+  locale: string
 }
 export interface BioFullType {
   [en:string]: BioType,
@@ -15,7 +16,7 @@ interface ExperienceType {
   years: string,
   company: string,
   description: string,
-  locale: ['en', 'jp']
+  locale: string
 }
 export interface ExperienceFullType {
   [en: string]: ExperienceType[],
@@ -35,8 +36,8 @@ interface ProjectType {
   year: string,
   description: string,
   link: string,
-  locale: ['en', 'jp'],
-  modal: ProjectModalType
+  locale: string,
+  modal?: ProjectModalType
 }
 
 export interface ProjectFullType {
@@ -46,10 +47,10 @@ export interface ProjectFullType {
 
 interface TechStackType {
   id: string,
-  label: ['Frontend', 'Backend', 'DevOps', 'Tools'],
+  label: string,
   name: string,
   icon: string,
-  locale: ['en', 'jp']
+  locale: string
 }
 export interface TechStackFullType {
   frontend: {
@@ -99,7 +100,7 @@ export interface EmailLabelsFullType {
 }
 
 export interface SelectedLocaleProps {
-  selectedLocale?: 'en' | 'jp'
+  selectedLocale?: any
 }
 
 export interface techStackLabelType {

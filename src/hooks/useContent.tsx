@@ -1,7 +1,12 @@
 'use client'
 
 import { createContext, useContext, useState, useEffect, useReducer } from "react";
-import { bioReducer, experienceReducer, projectReducer, techStackReducer } from "@/reducer";
+import {
+  bioReducer,
+  experienceReducer,
+  projectReducer,
+  techStackReducer
+} from "@/reducer";
 import {
   heroFullType,
   ProjectFullType,
@@ -9,9 +14,13 @@ import {
   ExperienceFullType,
   TechStackFullType,
   ServiceFullType,
-  EmailLabelsFullType
+  EmailLabelsFullType,
+  BioType,
+  ExperienceType,
+  ProjectType,
+  TechStackType
 } from "@/const";
-import { hero, service, email_labels } from "@/consts";
+import { hero, service, email_labels, initialContentProps } from "@/consts";
 interface ContentProviderProps {
   children: React.ReactNode,
   locale: string
@@ -24,20 +33,9 @@ interface ContentProps {
   hero: heroFullType,
   service:ServiceFullType,
   email_labels: EmailLabelsFullType,
-  isLoadig: boolean
+  isLoading: boolean
 }
-const initialContentProps = {
-  bio: {
-    en: {},
-    jp: {}
-  },
-  experience: {},
-  project: {},
-  techStack: {},
-  hero: {},
-  service: {},
-  email_labels: {}
-}
+
 export const ContentContext = createContext<ContentProps>(initialContentProps);
 export const ContentProvider = ({ children, locale } : ContentProviderProps) => {
 
@@ -45,7 +43,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [experience, experienceDispatch] = useReducer(experienceReducer, {})
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
-  const [isLoadig, setLoading] = useState<boolean>(true)
+  const [isLoading, setLoading] = useState<boolean>(true)
   useEffect(() => {
     if (Object.keys(bio).length != 0
       && Object.keys(experience).length != 0
@@ -57,7 +55,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   useEffect(() => {
     fetch('/api/bio')
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: BioType[]) => {
         const en = data.find((d) => d.locale === 'en')
         const jp = data.find((d) => d.locale === 'jp')
         bioDispatch({ type: 'SET_CONTENT', content: { en, jp } })
@@ -67,7 +65,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   useEffect(() => {
     fetch('/api/project')
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: ProjectType[]) => {
         const en = data.filter((d) => d.locale === 'en')
         const jp = data.filter((d) => d.locale === 'jp')
         projectDispatch({ type: 'SET_CONTENT', content: { en, jp } })
@@ -77,7 +75,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   useEffect(() => {
     fetch('/api/techstack')
       .then((res) => res.json())
-      .then((data) => {
+      .then((data: TechStackType[]) => {
         const frontend = {
           en: data.filter((d) => d.label === 'Frontend' && d.locale === 'en'),
           jp: data.filter((d) => d.label === 'Frontend' && d.locale === 'jp')
@@ -108,7 +106,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   useEffect(() => {
     fetch('/api/experience')
       .then((res) => res.json())
-      .then((data) => {
+      .then((data:ExperienceType[]) => {
         const en = data.filter((d) => d.locale === 'en')
         const jp = data.filter((d) => d.locale === 'jp')
         experienceDispatch({ type: 'SET_CONTENT', content: { en, jp } })
@@ -125,7 +123,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     hero,
     service,
     email_labels,
-    isLoadig
+    isLoading
   }
 
   return (
