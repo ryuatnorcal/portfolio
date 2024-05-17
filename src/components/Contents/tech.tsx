@@ -22,8 +22,6 @@ export const Tech = () => {
   } = techStack || {}
   const labels = tech && tech[locale] || ''
   const techLabel = techStackLabels && techStackLabels[locale] || {}
-
-  // console.log(techStack)
   
   return (
     <div className="flex flex-col justify-start w-10/12 md:w-8/12 xl:w-6/12 pb-5p">

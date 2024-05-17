@@ -127,7 +127,6 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     email_labels,
     isLoadig
   }
-  console.log(contentProps)
 
   return (
     <ContentContext.Provider value={contentProps}>

@@ -9,7 +9,7 @@ interface Params {
 }
 export const GET = async (req: NextRequest, {params}: Params) => {
   const { locale = 'en' } = params
-  console.log(params, locale)
+  
   try {
     connectToDb()
     const bio = await Bio.findOne({ locale })

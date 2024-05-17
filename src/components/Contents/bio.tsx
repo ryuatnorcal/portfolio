@@ -8,7 +8,6 @@ export const Bio = () => {
   const { locale } = useLocale()
   const { bio } = useContent()
   const {title, name, description} = bio && bio[locale] || {}
-  console.log(title, name, description, locale)
   
   return (
     <div className="flex flex-col justify-start w-10/12 md:w-8/12 pt-5p pb-10p">
