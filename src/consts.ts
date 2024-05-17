@@ -1,7 +1,10 @@
 import {
   techStackLabelType,
   sectionLabelsType,
-  serviceType
+  serviceType,
+  hireContentType,
+  EmailLabelsFullType,
+  contactContentType
 } from './const.d'
 export const hero = {
   en: {
@@ -11,7 +14,7 @@ export const hero = {
     location: 'From Calgary AB, Canada'
   },
   jp: {
-    title: 'フルスタック 開発者',
+    title: '<span style="white-space:nowrap">フルスタック</span><br />開発者',
     subtitle: '信頼できる本格的なソフトウェア開発をご提供いたします。',
     catchphrase: '必要な時だけ雇える系',
     location: 'カナダ　から　日本へ'
@@ -39,16 +42,18 @@ export const service:serviceType = {
   ]
 }
 
-export const email_labels = {
+export const email_labels:EmailLabelsFullType = {
   en: {
     name: 'Name',
     email: 'Email',
-    message: 'Message' 
+    message: 'Message',
+    submit: 'Submit'
   },
   jp: {
     name: '名前',
     email: 'メールアドレス',
-    message: 'メッセージ' 
+    message: 'メッセージ',
+    submit: '送信'
   }
 }
 
@@ -87,5 +92,21 @@ export const techStackLabels: techStackLabelType = {
     backend: 'バックエンド',
     devops: '開発環境設定',
     tools: 'ツール'
+  }
+}
+
+export const hireContent: hireContentType = {
+  en: 'I am currently open for permanent, contract, and/or freelancing. <br />Feel free to contact me via message form below or social platform',
+  jp: '日本からのコントラクトかフリーランスの仕事をお引き受けいたします。<br />メッセージフォームからお気軽にお問い合わせください。'
+}
+
+export const contactContent: contactContentType = {
+  en: {
+    catchphrase: 'Let\'s Talk',
+    msg: 'I will get back to you ASAP!'
+  },
+  jp: {
+    catchphrase: 'お問い合わせ',
+    msg: 'できるだけ早く返信いたします。'
   }
 }

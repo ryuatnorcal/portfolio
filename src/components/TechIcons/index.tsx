@@ -5,7 +5,6 @@ interface TechIconsProps {
   data: TechStackType[]
 }
 const TechIcons = ({ label, data }: TechIconsProps) => {
-  console.log(data, label)
   if(!data || !data.length) return null
   const techIcons = data.map((d) => (
     <div key={d.id} className="flex flex-col items-center justify-center pt-5 pb-5">

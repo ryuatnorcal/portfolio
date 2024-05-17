@@ -23,7 +23,8 @@ interface ContentProps {
   techStack: TechStackFullType,
   hero: heroFullType,
   service:ServiceFullType,
-  email_labels: EmailLabelsFullType
+  email_labels: EmailLabelsFullType,
+  isLoadig: boolean
 }
 const initialContentProps = {
   bio: {
@@ -44,7 +45,15 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [experience, experienceDispatch] = useReducer(experienceReducer, {})
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
-
+  const [isLoadig, setLoading] = useState<boolean>(true)
+  useEffect(() => {
+    if (Object.keys(bio).length != 0
+      && Object.keys(experience).length != 0
+      && Object.keys(project).length != 0
+      && Object.keys(techStack).length != 0) {
+       setLoading(false)
+      }
+  },[bio, experience, project, techStack])
   useEffect(() => {
     fetch('/api/bio')
       .then((res) => res.json())
@@ -115,7 +124,8 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     ...techStack,
     hero,
     service,
-    email_labels
+    email_labels,
+    isLoadig
   }
   console.log(contentProps)
 

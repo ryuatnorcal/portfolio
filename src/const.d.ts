@@ -5,11 +5,12 @@ interface BioType {
   locale: ['en', 'jp']
 }
 export interface BioFullType {
-  en: BioType,
-  jp: BioType
+  [en:string]: BioType,
+  [jp:string]: BioType
 }
 
 interface ExperienceType {
+  id: string,
   title: string,
   years: string,
   company: string,
@@ -17,21 +18,30 @@ interface ExperienceType {
   locale: ['en', 'jp']
 }
 export interface ExperienceFullType {
-  en: ExperienceType[],
-  jp: ExperienceType[]
+  [en: string]: ExperienceType[],
+  [jp: string]: ExperienceType[]
+}
+interface ProjectModalType {
+  title: string, 
+  year: string, 
+  img: string, 
+  description: string, 
+  url: string
 }
 
 interface ProjectType {
+  id: string,
   title: string,
   year: string,
   description: string,
   link: string,
-  locale: ['en', 'jp']
+  locale: ['en', 'jp'],
+  modal: ProjectModalType
 }
 
 export interface ProjectFullType {
-  en: ProjectType[],
-  jp: ProjectType[]
+  [en: string]: ProjectType[],
+  [jp: string]: ProjectType[]
 }
 
 interface TechStackType {
@@ -67,24 +77,25 @@ interface heroType {
   title: string
 }
 export interface heroFullType {
-  en: heroType,
-  jp: heroType
+  [en:string]: heroType,
+  [jp:string]: heroType
 }
 
 export interface ServiceFullType {
-  en: string[],
-  jp: string[]
+  [en:string]: string[],
+  [jp:string]: string[]
 }
 
 interface EmailLabelsType {
   name: string,
   email: string,
-  message: string
+  message: string,
+  submit: string
 }
 
 export interface EmailLabelsFullType {
-  en: EmailLabelsType,
-  jp: EmailLabelsType
+  [en:string]: EmailLabelsType,
+  [jp:string]: EmailLabelsType
 }
 
 export interface SelectedLocaleProps {
@@ -132,4 +143,20 @@ export interface sectionLabelsType {
 export interface serviceType {
   [en: string]: string[],
   [jp: string]: string[]
+}
+
+export interface hireContentType {
+  [en: string]: string,
+  [jp: string]: string
+}
+
+export interface contactContentType {
+  [en: string]: {
+    catchphrase:string,
+    msg: string
+  },
+  [jp:string]: {
+    catchphrase:string,
+    msg: string
+  }
 }

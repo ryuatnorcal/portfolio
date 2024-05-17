@@ -1,8 +1,12 @@
 'use client'
 import {useState} from 'react'
-
+import { useLocale } from '@/hooks/useLocale';
+import { email_labels } from '../../consts'
+import { useContent } from '@/hooks/useContent';
 
 const Email = () => {
+  const { locale } = useLocale()
+  const { email, name, message, submit } = email_labels[locale] || {}
   const [error, setError] = useState<string | null>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
@@ -27,25 +31,25 @@ const Email = () => {
       {error && <p className="text-red-500">{error}</p>}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Email
+            {email}
           </label>
-          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" id="email" type="email" placeholder="Email" />
+          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" id="email" type="email" placeholder={email} />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Name
+            {name}
           </label>
-          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder="Name" />
+          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder={name} />
         </div>
         <div className="mb-6">
           <label className="block text-gray-700 text-sm font-bold mb-2">
-            Message
+            {message}
           </label>
-          <textarea className=" appearance-none border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" name="message" placeholder="Message"></textarea>
+          <textarea className=" appearance-none border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" name="message" placeholder={message}></textarea>
         </div>
         <div className="flex items-center justify-between">
           <button className="w-full bg-black text-white py-2 px-4 rounded">
-            Submit
+            {submit}
           </button>
         </div>
       </form>
