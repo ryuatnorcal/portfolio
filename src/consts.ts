@@ -134,7 +134,7 @@ export const initialContentProps = {
   },
   experience: {
     en: [
-      { id: '',
+      { _id: '',
         title: '',
         years: '',
         company: '',
@@ -143,7 +143,7 @@ export const initialContentProps = {
       }
     ],
     jp: [
-      { id: '',
+      { _id: '',
         title: '',
         years: '',
         company: '',
@@ -154,7 +154,7 @@ export const initialContentProps = {
   },
   project: {
     en: [{
-      id: '',
+      _id: '',
       title: '',
       year: '',
       description: '',
@@ -163,7 +163,7 @@ export const initialContentProps = {
     }],
     jp: [
       {
-        id: '',
+        _id: '',
         title: '',
         year: '',
         description: '',
@@ -176,7 +176,7 @@ export const initialContentProps = {
     frontend: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -185,7 +185,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -196,7 +196,7 @@ export const initialContentProps = {
     backend: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -205,7 +205,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -216,7 +216,7 @@ export const initialContentProps = {
     devops: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -225,7 +225,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -236,7 +236,7 @@ export const initialContentProps = {
     tools: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -245,7 +245,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
