@@ -23,7 +23,7 @@ const Project = ({ data }: {data: ProjectType[]}) => {
    
     return (
       <div
-        key={prj.id}
+        key={prj._id}
         className={`w-full lg:w-1/2 xl:w-1/3 cursor-pointer hover:bg-gray-100 hover:text-gray-700 ${borderClass}`}
         onClick={()=>onClickCard(prj)}
       >
