@@ -7,7 +7,7 @@ const Modal = ({ showModal, setIsModalOpen, data }) => {
   return showModal && (
     <div className="fixed h-full w-full z-10 inset-0 overflow-y-auto backdrop-blur bg-black/30">
       <div className="flex items-center justify-center min-h-screen min-w-full">
-        <div className="bg-white rounded-lg h-full lg:w-2/3 tracking-wider p-5 relative">
+        <div className="bg-white rounded-lg h-full md:w-2/3 xl:w-1/3 tracking-wider p-5 relative">
           <Image
             src={close}
             alt="close"
