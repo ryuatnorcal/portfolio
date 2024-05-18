@@ -44,14 +44,16 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
   const [isLoading, setLoading] = useState<boolean>(true)
+
   useEffect(() => {
     if (Object.keys(bio).length != 0
       && Object.keys(experience).length != 0
       && Object.keys(project).length != 0
       && Object.keys(techStack).length != 0) {
-       setLoading(false)
+        setTimeout(() => setLoading(false), 350)
       }
-  },[bio, experience, project, techStack])
+  }, [bio, experience, project, techStack])
+  
   useEffect(() => {
     fetch('/api/bio')
       .then((res) => res.json())
