@@ -8,7 +8,6 @@ import logo from '../../../public/icons/barcode.gif'
 const Menu = () => {
   const { locale, setLocale } = useLocale()
   const pathname = usePathname()
-  console.log(pathname)
 
   const handleLocale = () => {
     if (locale === 'en') {
