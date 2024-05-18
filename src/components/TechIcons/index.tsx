@@ -7,7 +7,7 @@ interface TechIconsProps {
 const TechIcons = ({ label, data }: TechIconsProps) => {
   if(!data || !data.length) return null
   const techIcons = data.map((d) => (
-    <div key={d.id} className="flex flex-col items-center justify-center pt-5 pb-5">
+    <div key={d._id} className="flex flex-col items-center justify-center pt-5 pb-5">
       <Image src={`/icons/${d.icon}`} alt={d.name} width={50} height={50 } />
       <p className="text-sm text-center">{d.name}</p>
     </div>

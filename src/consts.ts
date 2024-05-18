@@ -4,7 +4,8 @@ import {
   serviceType,
   hireContentType,
   EmailLabelsFullType,
-  contactContentType
+  contactContentType,
+  emailSuccessMessageType
 } from './const.d'
 export const hero = {
   en: {
@@ -109,6 +110,10 @@ export const contactContent: contactContentType = {
     catchphrase: 'お問い合わせ',
     msg: 'できるだけ早く返信いたします。'
   }
+}
+export const emailSuccessMessage: emailSuccessMessageType = {
+  en: 'Your message has been successfully sent. Thank you!',
+  jp: 'メッセージを送信しました。ありがとうございます。'
 }
 
 export const initialContentProps = {
