@@ -6,7 +6,6 @@ const config: Config = {
     "./src/components/**/*.{js,ts,jsx,tsx,mdx}",
     "./src/app/**/*.{js,ts,jsx,tsx,mdx}",
   ],
-  plugins: [],
   theme: {
     extend: {
       colors: {
@@ -24,8 +23,12 @@ const config: Config = {
       letterSpacing: {
         'sm': '0.2rem',
         'md': '0.5rem',
+      },
+      inset: {
+        '100': '-25%',
       }
     },
   },
+  plugins: [],
 };
 export default config;
