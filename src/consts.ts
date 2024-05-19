@@ -17,7 +17,7 @@ export const hero = {
   jp: {
     title: '<span style="white-space:nowrap">フルスタック</span><br />開発者',
     subtitle: '信頼できる本格的なソフトウェア開発をご提供いたします。',
-    catchphrase: '必要な時だけ雇える系',
+    catchphrase: '必要な時だけ雇える',
     location: 'カナダ　から　日本へ'
   }
 }
