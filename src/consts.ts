@@ -4,7 +4,8 @@ import {
   serviceType,
   hireContentType,
   EmailLabelsFullType,
-  contactContentType
+  contactContentType,
+  emailSuccessMessageType
 } from './const.d'
 export const hero = {
   en: {
@@ -16,7 +17,7 @@ export const hero = {
   jp: {
     title: '<span style="white-space:nowrap">フルスタック</span><br />開発者',
     subtitle: '信頼できる本格的なソフトウェア開発をご提供いたします。',
-    catchphrase: '必要な時だけ雇える系',
+    catchphrase: '必要な時だけ雇える',
     location: 'カナダ　から　日本へ'
   }
 }
@@ -28,7 +29,7 @@ export const service:serviceType = {
     'API Development',
     'Jest Testing',
     'CI/CD',
-    'counseling',
+    'Counseling',
     'Scrum Master'
   ],
   jp: [
@@ -110,6 +111,10 @@ export const contactContent: contactContentType = {
     msg: 'できるだけ早く返信いたします。'
   }
 }
+export const emailSuccessMessage: emailSuccessMessageType = {
+  en: 'Your message has been successfully sent. Thank you!',
+  jp: 'メッセージを送信しました。ありがとうございます。'
+}
 
 export const initialContentProps = {
   isLoading: true,
@@ -129,7 +134,7 @@ export const initialContentProps = {
   },
   experience: {
     en: [
-      { id: '',
+      { _id: '',
         title: '',
         years: '',
         company: '',
@@ -138,7 +143,7 @@ export const initialContentProps = {
       }
     ],
     jp: [
-      { id: '',
+      { _id: '',
         title: '',
         years: '',
         company: '',
@@ -149,7 +154,7 @@ export const initialContentProps = {
   },
   project: {
     en: [{
-      id: '',
+      _id: '',
       title: '',
       year: '',
       description: '',
@@ -158,7 +163,7 @@ export const initialContentProps = {
     }],
     jp: [
       {
-        id: '',
+        _id: '',
         title: '',
         year: '',
         description: '',
@@ -171,7 +176,7 @@ export const initialContentProps = {
     frontend: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -180,7 +185,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -191,7 +196,7 @@ export const initialContentProps = {
     backend: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -200,7 +205,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -211,7 +216,7 @@ export const initialContentProps = {
     devops: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -220,7 +225,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -231,7 +236,7 @@ export const initialContentProps = {
     tools: {
       en: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',
@@ -240,7 +245,7 @@ export const initialContentProps = {
       ],
       jp: [
         {
-          id: '',
+          _id: '',
           label: '',
           name: '',
           icon: '',

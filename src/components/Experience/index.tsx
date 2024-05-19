@@ -14,7 +14,7 @@ const Experience = ({ data }: { data: ExperienceType[] }) => {
     }
    
     return (
-      <div key={exp.id} className={`w-full lg:w-1/2 xl:w-1/3 ${borderClass}`}>
+      <div key={exp._id} className={`w-full lg:w-1/2 xl:w-1/3 ${borderClass}`}>
         <span className="underline font-bold text-2xl">{ exp.title }</span>
           <p>{ exp.years }</p>
           <p className="font-semibold text-gray-500">{ exp.company }</p>

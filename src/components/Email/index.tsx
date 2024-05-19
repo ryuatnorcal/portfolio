@@ -1,13 +1,13 @@
 'use client'
 import {useState} from 'react'
 import { useLocale } from '@/hooks/useLocale';
-import { email_labels } from '../../consts'
-import { useContent } from '@/hooks/useContent';
+import { email_labels, emailSuccessMessage } from '../../consts'
 
 const Email = () => {
   const { locale } = useLocale()
   const { email, name, message, submit } = email_labels[locale] || {}
   const [error, setError] = useState<string | null>(null);
+  const [success, setSuccess] = useState<string | null>(null);
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -20,7 +20,10 @@ const Email = () => {
     };
     const response = await fetch(endpoint, options);
     const result = await response.json();
-
+    if(result.status === 'success') {
+      setSuccess(emailSuccessMessage[locale])      
+      event?.currentTarget?.reset();
+    }
     if (result.status === 'error') {
       setError(result.data.message);
     }
@@ -28,7 +31,8 @@ const Email = () => {
   return (
     <div className="max-w-md mx-auto">
       <form onSubmit={handleSubmit} className="bg-white rounded px-8 pt-6 pb-8 mb-4">
-      {error && <p className="text-red-500">{error}</p>}
+        {success && <p className="text-green-500">{success}</p>}
+        {error && <p className="text-red-500">{error}</p>}
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             {email}

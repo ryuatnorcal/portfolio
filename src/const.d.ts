@@ -10,8 +10,8 @@ export interface BioFullType {
   [jp:string]: BioType
 }
 
-interface ExperienceType {
-  id: string,
+export interface ExperienceType {
+  _id: string,
   title: string,
   years: string,
   company: string,
@@ -22,7 +22,7 @@ export interface ExperienceFullType {
   [en: string]: ExperienceType[],
   [jp: string]: ExperienceType[]
 }
-interface ProjectModalType {
+export interface ProjectModalType {
   title: string, 
   year: string, 
   img: string, 
@@ -30,8 +30,8 @@ interface ProjectModalType {
   url: string
 }
 
-interface ProjectType {
-  id: string,
+export interface ProjectType {
+  _id: string,
   title: string,
   year: string,
   description: string,
@@ -45,8 +45,8 @@ export interface ProjectFullType {
   [jp: string]: ProjectType[]
 }
 
-interface TechStackType {
-  id: string,
+export interface TechStackType {
+  _id: string,
   label: string,
   name: string,
   icon: string,
@@ -69,6 +69,11 @@ export interface TechStackFullType {
     [en:string]: TechStackType[],
     [jp:string]: TechStackType[]
   }
+}
+
+export interface emailSuccessMessageType {
+  [en:string]: string,
+  [jp:string]: string
 }
 
 interface heroType {
