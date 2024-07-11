@@ -29,7 +29,7 @@ export const service:serviceType = {
     'API Development',
     'Jest Testing',
     'CI/CD',
-    'counseling',
+    'Consultant',
     'Scrum Master'
   ],
   jp: [
