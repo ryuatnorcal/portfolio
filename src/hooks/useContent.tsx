@@ -109,8 +109,9 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     fetch('/api/experience')
       .then((res) => res.json())
       .then((data:ExperienceType[]) => {
-        const en = data.filter((d) => d.locale === 'en')
-        const jp = data.filter((d) => d.locale === 'jp')
+        const sortedData = data.sort((a, b) => Number(b.seq) - Number(a.seq))
+        const en = sortedData.filter((d) => d.locale === 'en')
+        const jp = sortedData.filter((d) => d.locale === 'jp')
         experienceDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
   }, [locale])
