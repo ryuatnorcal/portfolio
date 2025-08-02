@@ -139,7 +139,8 @@ export const initialContentProps = {
         years: '',
         company: '',
         description: '',
-        locale: 'en'
+        locale: 'en',
+        seq: ''
       }
     ],
     jp: [
@@ -148,7 +149,8 @@ export const initialContentProps = {
         years: '',
         company: '',
         description: '',
-        locale: 'jp'
+        locale: 'jp',
+        seq: ''
       }
     ]
   },

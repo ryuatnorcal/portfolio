@@ -25,7 +25,7 @@ export default function RootLayout({
           <LocaleProvider>
             <Menu />
             {children}
-            <Email />
+            {/* <Email /> */}
           </LocaleProvider>
         </div>
         <Footer />
