@@ -97,8 +97,8 @@ export const techStackLabels: techStackLabelType = {
 }
 
 export const hireContent: hireContentType = {
-  en: 'I am currently open for permanent, contract, and/or freelancing. <br />Feel free to contact me via message form below or social platform',
-  jp: '日本からのコントラクトかフリーランスの仕事をお引き受けいたします。<br />メッセージフォームからお気軽にお問い合わせください。'
+  en: 'I am currently open for permanent, contract, and/or freelancing. <br />Feel free to contact me via <a href="https://www.linkedin.com/in/rmatsuda/" target="_blank">LinkedIn</a>',
+  jp: '日本からのコントラクトかフリーランスの仕事をお引き受けいたします。<br /><a href="https://www.linkedin.com/in/rmatsuda/" target="_blank">LinkedIn</a>からお気軽にお問い合わせください。'
 }
 
 export const contactContent: contactContentType = {
