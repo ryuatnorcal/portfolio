@@ -8,12 +8,12 @@ const Footer = () => {
         <a href={process.env.LINKEDIN_LINK} target='_blank' className="p-2">
           <Image src={linkedin} alt="linkedin" width={50} height={50} />
         </a>
-        <a href={process.env.UPWORK_LINK} target='_blank' className="p-2">
+        {/* <a href={process.env.UPWORK_LINK} target='_blank' className="p-2">
           <Image src={upwork} alt="linkedin" width={50} height={50} />
-        </a>
+        </a> */}
       </div>
       <div className="flex items-center sm:justify-end grid grid-cols-1 sm:text-right text-sm tracking-wider">
-        <span>© 2024. All rights reserved.</span>
+        <span>© 2025. All rights reserved.</span>
         <span>Site icons by <a target="_blank" href="https://icons8.com">Icons8</a></span>
       </div>
     </footer>

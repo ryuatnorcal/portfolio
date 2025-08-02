@@ -16,7 +16,8 @@ export interface ExperienceType {
   years: string,
   company: string,
   description: string,
-  locale: string
+  locale: string,
+  seq: string
 }
 export interface ExperienceFullType {
   [en: string]: ExperienceType[],
