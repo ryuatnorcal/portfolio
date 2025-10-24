@@ -2,10 +2,9 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Menu from "@/components/Menu";
-import Email from "@/components/Email";
 import Footer from "@/components/Footer";
 import { LocaleProvider, useLocale } from "@/hooks/useLocale";
-import { ContentProvider } from "@/hooks/useContent";
+import { Analytics } from "@vercel/analytics/next"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,6 +27,7 @@ export default function RootLayout({
           </LocaleProvider>
         </div>
         <Footer />
+        <Analytics />
       </body>
     </html>
   );
