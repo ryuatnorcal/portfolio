@@ -1,21 +1,28 @@
 'use client'
-import {useState} from 'react'
+import {useState, useEffect} from 'react'
 import { useLocale } from '@/hooks/useLocale';
+import { usePathname } from 'next/navigation'
 import { email_labels, emailSuccessMessage } from '../../consts'
 
 const Email = () => {
   const { locale } = useLocale()
+  const pathname = usePathname()
   const { email, name, message, submit } = email_labels[locale] || {}
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [emailValue, setEmailValue] = useState('')
   const [nameValue, setNameValue] = useState('')
   const [messageValue, setMessageValue] = useState('')
+
+  useEffect(() => {
+    setSuccess(null)
+  }, [pathname, locale])
+
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
     const formData = new FormData(event.currentTarget);
-  
+
     const endpoint = '/api/email';
     const options = {
       method: 'POST',
