@@ -5,6 +5,7 @@ import Menu from "@/components/Menu";
 import Footer from "@/components/Footer";
 import { LocaleProvider, useLocale } from "@/hooks/useLocale";
 import { Analytics } from "@vercel/analytics/next"
+import { SpeedInsights } from "@vercel/speed-insights/next"
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -28,6 +29,7 @@ export default function RootLayout({
         </div>
         <Footer />
         <Analytics />
+        <SpeedInsights />
       </body>
     </html>
   );
