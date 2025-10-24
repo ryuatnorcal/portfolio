@@ -43,3 +43,23 @@ The easiest way to deploy your Next.js app is to use the [Vercel Platform](https
 Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
 
 This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+
+## Test 
+I use Playwright for end to end testing. To run tests use following command:
+### Run all tests:
+```bash
+npx playwright test
+```
+### Open the UI runner (good for debugging):
+```bash
+npx playwright test --ui
+```
+### Run headed:
+```bash
+npx playwright test --headed
+```
+### Run headed and open the UI runner (good for debugging):
+```bash
+npx playwright test --headed --ui
+```
+

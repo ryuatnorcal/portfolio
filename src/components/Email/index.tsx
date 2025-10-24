@@ -8,6 +8,9 @@ const Email = () => {
   const { email, name, message, submit } = email_labels[locale] || {}
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
+  const [emailValue, setEmailValue] = useState('')
+  const [nameValue, setNameValue] = useState('')
+  const [messageValue, setMessageValue] = useState('')
   const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setError(null);
@@ -22,9 +25,13 @@ const Email = () => {
     const result = await response.json();
     if(result.status === 'success') {
       setSuccess(emailSuccessMessage[locale])      
-      event?.currentTarget?.reset();
+      setEmailValue('')
+      setNameValue('')
+      setMessageValue('')
+      
     }
     if (result.status === 'error') {
+      setSuccess(null)
       setError(result.data.message);
     }
   }
@@ -37,19 +44,19 @@ const Email = () => {
           <label className="block text-gray-700 text-sm font-bold mb-2">
             {email}
           </label>
-          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" id="email" type="email" placeholder={email} />
+          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" name="email" id="email" type="email" placeholder={email} value={emailValue} onChange={(e) => setEmailValue(e.target.value)} />
         </div>
         <div className="mb-4">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             {name}
           </label>
-          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder={name} />
+          <input className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="name" name="name" type="text" placeholder={name} value={nameValue} onChange={(e) => setNameValue(e.target.value)} />
         </div>
         <div className="mb-6">
           <label className="block text-gray-700 text-sm font-bold mb-2">
             {message}
           </label>
-          <textarea className=" appearance-none border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" name="message" placeholder={message}></textarea>
+          <textarea className=" appearance-none border rounded w-full h-20 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline" id="message" name="message" placeholder={message} value={messageValue} onChange={(e) => setMessageValue(e.target.value)}></textarea>
         </div>
         <div className="flex items-center justify-between">
           <button className="w-full bg-black text-white py-2 px-4 rounded">
