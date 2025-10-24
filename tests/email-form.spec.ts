@@ -17,8 +17,8 @@ test.describe('Contact form', () => {
       }
       return route.continue();
     });
-
     await page.goto('/');
+    await page.goto('/contact');
 
     await page.fill('input#email', 'john@example.com');
     await page.fill('input#name', 'John Doe');
@@ -29,8 +29,7 @@ test.describe('Contact form', () => {
 
     // Success message is localized via emailSuccessMessage[locale].
     // Assert the success container is visible instead of hardcoding text.
-    const successLocator = page.locator('p.text-green-500');
-    await expect(successLocator.first()).toBeVisible();
+    await expect(page.getByText('Your message has been successfully sent. Thank you!')).toBeVisible()
 
     await expect(page.locator('input#email')).toHaveValue('');
     await expect(page.locator('input#name')).toHaveValue('');
@@ -41,30 +40,29 @@ test.describe('Contact form', () => {
     await page.route('**/api/email', async (route) => {
       if (route.request().method() === 'POST') {
         return route.fulfill({
-          status: 200,
+          status: 500,
           contentType: 'application/json',
           body: JSON.stringify({
             status: 'error',
-            data: { message: 'Invalid Email' },
+            data: { message: 'Invalid Name' },
           }),
         });
       }
       return route.continue();
     });
-
     await page.goto('/');
+    await page.goto('/contact');
 
-    await page.fill('input#email', 'bad-email');
-    await page.fill('input#name', 'Jane');
+    await page.fill('input#email', 'badname@test.com');
+    await page.fill('input#name', '');
     await page.fill('textarea#message', 'Hello');
 
     await page.click('form button');
 
-    // await expect(page.getByText('Invalid Email').first()).toBeVisible();
-
+    await expect(page.getByText('Invalid Name')).toBeVisible()
     // Inputs are not automatically cleared on error; verify they still contain the values
-    await expect(page.locator('input#email')).toHaveValue('bad-email');
-    await expect(page.locator('input#name')).toHaveValue('Jane');
+    await expect(page.locator('input#email')).toHaveValue('badname@test.com');
+    await expect(page.locator('input#name')).toHaveValue('');
     await expect(page.locator('textarea#message')).toHaveValue('Hello');
   });
 });
