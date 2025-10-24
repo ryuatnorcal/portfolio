@@ -25,6 +25,7 @@ const Email = () => {
       event?.currentTarget?.reset();
     }
     if (result.status === 'error') {
+      setSuccess(null)
       setError(result.data.message);
     }
   }
