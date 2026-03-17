@@ -7,8 +7,14 @@ const Project = ({ data }: {data: ProjectType[]}) => {
   if (!data) return null
   const onClickCard = (data: ProjectType): void => {
     const { modal = {} } = data || {}
-    setSelection(modal)
-    setIsModalOpen(true)
+    if(modal && Object.keys(modal).length > 0){
+      setSelection(modal)
+      setIsModalOpen(true)
+    } else {
+      if(data.link) {
+        window.open(data.link, '_blank')
+      }
+    }
   }
   const renderExperience = (data: ProjectType[]) => data.map((prj, i) => {
     let borderClass = ''
