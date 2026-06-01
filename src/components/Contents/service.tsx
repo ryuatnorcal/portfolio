@@ -4,8 +4,8 @@ import { service, sectionLabels } from '../../consts'
 
 export const Service = () => {
   const { locale } = useLocale()
-  const left = service[locale].slice(0, 3)
-  const right = service[locale].slice(3)
+  const left = service[locale].slice(0, 4)
+  const right = service[locale].slice(4)
   const label = sectionLabels.service[locale] || ''
 
   const renderService = (data: string[]) => data.map((name, i) => <p key={i}>{`+ ${name}`}</p>)

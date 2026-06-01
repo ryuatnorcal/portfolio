@@ -11,13 +11,13 @@ export const hero = {
   en: {
     title: 'FullStack Developer',
     subtitle: 'With a passion for creating robust and intuitive softwares.',
-    catchphrase: 'Developer onDemand',
+    catchphrase: '',
     location: 'From Calgary AB, Canada'
   },
   jp: {
     title: '<span style="white-space:nowrap">フルスタック</span><br />開発者',
     subtitle: '信頼できる本格的なソフトウェア開発をご提供いたします。',
-    catchphrase: '必要な時だけ雇える',
+    catchphrase: '',
     location: 'カナダ　から　日本へ'
   }
 }
@@ -27,6 +27,7 @@ export const service:serviceType = {
     'Web Development',
     'Mobile Development',
     'API Development',
+    'AI/LLM Integration',
     'Jest Testing',
     'CI/CD',
     'Consultant',
@@ -36,6 +37,7 @@ export const service:serviceType = {
     'ホームページ開発',
     'アプリ開発',
     'API 開発',
+    'AI/LLM 開発',
     'Jest テスト',
     'CI/CD',
     'コンサルタント',
