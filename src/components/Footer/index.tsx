@@ -13,7 +13,7 @@ const Footer = () => {
         </a> */}
       </div>
       <div className="flex items-center sm:justify-end grid grid-cols-1 sm:text-right text-sm tracking-wider">
-        <span>© 2025. All rights reserved.</span>
+        <span>© {new Date().getFullYear()}. All rights reserved.</span>
         <span>Site icons by <a target="_blank" href="https://icons8.com">Icons8</a></span>
       </div>
     </footer>
