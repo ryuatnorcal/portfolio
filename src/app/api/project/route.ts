@@ -4,10 +4,11 @@ import { NextResponse, NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
   try {
-    connectToDb()
-    const bio = await Project.find()
-    return NextResponse.json(bio)
+    await connectToDb()
+    const projects = await Project.find()
+    return NextResponse.json(projects)
   } catch (error) {
-    throw new Error('Failed to fetch Project')
+    console.error('Failed to fetch Project:', error)
+    return NextResponse.json({ error: 'Failed to fetch Project' }, { status: 500 })
   }
 }

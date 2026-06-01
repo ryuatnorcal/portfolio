@@ -12,10 +12,14 @@ export const connectToDb = async () => {
       console.log("Using existing connection");
       return;
     }
-    const db = await mongoose.connect(process.env.MONGOOSE_URI || '');
+    const db = await mongoose.connect(process.env.MONGOOSE_URI || '', {
+      serverSelectionTimeoutMS: 5000,
+      socketTimeoutMS: 45000,
+    });
     connection.isConnected = db.connections[0].readyState;
+    console.log("Connected to MongoDB");
   } catch (error: any) {
-    console.log(error);
-    throw new Error(error);
+    console.error("MongoDB connection error:", error);
+    throw error;
   }
 };

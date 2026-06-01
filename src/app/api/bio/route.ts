@@ -4,10 +4,11 @@ import { NextResponse, NextRequest } from "next/server";
 
 export const GET = async (req: NextRequest) => {
   try {
-    connectToDb()
+    await connectToDb()
     const bio = await Bio.find()
     return NextResponse.json(bio)
   } catch (error) {
-    throw new Error('Failed to fetch bio')
+    console.error('Failed to fetch bio:', error)
+    return NextResponse.json({ error: 'Failed to fetch bio' }, { status: 500 })
   }
 }
