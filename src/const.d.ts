@@ -157,6 +157,11 @@ export interface hireContentType {
   [jp: string]: string
 }
 
+export interface hireButtonLabelType {
+  [en: string]: string,
+  [jp: string]: string
+}
+
 export interface contactContentType {
   [en: string]: {
     catchphrase:string,

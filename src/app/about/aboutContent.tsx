@@ -3,6 +3,7 @@ import Page from '@/components/Pages'
 import { Bio, Experience, Project, Hire } from '@/components/Contents'
 import { useContent } from "@/hooks/useContent";
 import Loading from '../loading'
+import Email from '@/components/Email'
 const AboutContent = () => {
   const { isLoading } = useContent()
   return !isLoading ? (
@@ -19,7 +20,7 @@ const AboutContent = () => {
       <Page sectionName='hire'>
         <Hire />
       </Page>
-      </main>
+    </main>
   ) : (
       <Loading />
   )
