@@ -9,11 +9,11 @@ const ContactContent = ({locale}: {locale: string}) => {
   return !isLoading ? (
     <main className="flex flex-row items-center justify-center ">
       <Page sectionName="contact">
-        <div className="pt-10p">
-          <span className="text-4xl sm:text-7xl block font-bold tracking-wider mb-5">
+        <div className="w-10/12 py-[var(--section-padding-y)] md:w-8/12 xl:w-6/12">
+          <h1 className="mb-5 font-display text-4xl font-semibold tracking-tight sm:text-6xl">
             {catchphrase}
-          </span>
-          <p className='tracking-wider'>{ msg }</p>
+          </h1>
+          <p className='leading-relaxed text-fg-muted'>{ msg }</p>
         </div>
       </Page>
     </main>

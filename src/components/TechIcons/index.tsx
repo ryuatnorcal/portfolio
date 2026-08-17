@@ -7,16 +7,18 @@ interface TechIconsProps {
 const TechIcons = ({ label, data }: TechIconsProps) => {
   if(!data || !data.length) return null
   const techIcons = data.map((d) => (
-    <div key={d._id} className="flex flex-col items-center justify-center pt-5 pb-5">
-      <Image src={`/icons/${d.icon}`} alt={d.name} width={50} height={50 } />
-      <p className="text-sm text-center">{d.name}</p>
+    <div key={d._id} className="flex flex-col items-center gap-2.5 px-2 py-4">
+      <div className="icon-chip">
+        <Image src={`/icons/${d.icon}`} alt={d.name} width={36} height={36} />
+      </div>
+      <span className="text-center font-mono text-[11px] text-fg-muted">{d.name}</span>
     </div>
   ))
 
   return (
-    <div className="grid grid-cols-1 text-xl items-center flex tracking-sm leading-relaxed mt-5 mb-5">
-      <h3 className="text-2xl font-bold">{label}</h3>
-      <div className="flex grid grid-cols-2 md:grid-cols-3 xl:grid-cols-4 justify-around flex-wrap items-center mt-5 mb-5">
+    <div className="mb-10">
+      <h3 className="mb-[18px] font-body text-lg font-semibold text-fg">{label}</h3>
+      <div className="grid grid-cols-2 gap-2 md:grid-cols-3 xl:grid-cols-4">
         { techIcons }
       </div>
     </div>

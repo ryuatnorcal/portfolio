@@ -3,30 +3,25 @@ const Experience = ({ data }: { data: ExperienceType[] }) => {
 
   if(!data) return null
   const renderExperience = (data: ExperienceType[]) => data.map((exp, i) => {
-    let borderClass = ''
-    borderClass = i == 0 ? 'p-2 lg:p-5' : 'p-3 lg:p-5 '
-    if (i !== 0 && i % 2 === 0) {
-      borderClass += 'xs:border-l-none xl:border-l border-black'
-    } 
-    if (i !== 0 && i % 2 !== 0) {
-      borderClass += i % 3 === 0 ?
-      'xs:border-none lg:border-l xl:border-none border-black' : 'xs:border-l-none lg:border-l border-black'
-    }
-   
     return (
-      <div key={exp._id} className={`w-full lg:w-1/2 xl:w-1/3 ${borderClass}`}>
-        <span className="underline font-bold text-2xl">{ exp.title }</span>
-          <p>{ exp.years }</p>
-          <p className="font-semibold text-gray-500">{ exp.company }</p>
-          <p className="mt-3">
+      <div
+        key={exp._id}
+        className={`grid grid-cols-1 gap-6 py-6 sm:grid-cols-[7rem_1fr] ${i === data.length - 1 ? "" : "border-b border-border"}`}
+      >
+        <div className="pt-1 font-mono text-xs text-fg-muted">{ exp.years }</div>
+        <div>
+          <div className="mb-1 font-display text-lg font-semibold text-fg">{ exp.title }</div>
+          <div className="mb-2 text-sm text-accent">{ exp.company }</div>
+          <p className="m-0 leading-relaxed text-fg-muted">
             { exp.description }
           </p>
         </div>
+      </div>
     )
   }) || []
 
   return (
-    <div className="flex flex-wrap tracking-wider text-xl">
+    <div>
       {renderExperience(data)}
     </div>
   )

@@ -1,14 +1,10 @@
 'use client'
-import Image from "next/image";
-import html from '../../../public/icons/icons8-html.svg'
-import css from '../../../public/icons/icons8-css.svg'
-import react from '../../../public/icons/icons8-react-native.svg'
-import ts from '../../../public/icons/icons8-typescript.svg'
-import js from '../../../public/icons/icons8-javascript.svg'
 import { useLocale } from "@/hooks/useLocale";
 import { useContent } from "@/hooks/useContent";
 import { sectionLabels, techStackLabels } from "../../consts";
 import TechIcons from '../TechIcons'
+import SectionHeading from '@/components/SectionHeading'
+
 export const Tech = () => {
   const { locale } = useLocale()
   const {techStack} = useContent()
@@ -24,8 +20,8 @@ export const Tech = () => {
   const techLabel = techStackLabels && techStackLabels[locale] || {}
   
   return (
-    <div className="flex flex-col justify-start w-10/12 md:w-8/12 xl:w-6/12 pb-5p">
-      <h1 className="text-4xl font-bold tracking-md mb-5 underline">{labels}</h1>
+    <div className="flex w-10/12 flex-col justify-start py-[var(--section-padding-y)] md:w-8/12 xl:w-6/12">
+      <SectionHeading index={`02 — ${labels}`} title={labels} />
       <TechIcons label={techLabel.frontend} data={frontend && frontend[locale]} />
       <TechIcons label={techLabel.backend} data={backend && backend[locale]} />
       <TechIcons label={techLabel.devops} data={devops && devops[locale]} />
