@@ -1,26 +1,25 @@
 'use client'
 import Image from "next/image"
 import close from '../../../public/icons/icons8-close.svg'
-import screenshot from '../../../public/screenshot/weatherPage.png'
 const Modal = ({ showModal, setIsModalOpen, data }) => {
   const {title, year, img, description, url} = data
   return showModal && (
-    <div className="fixed h-full w-full z-10 inset-0 overflow-y-auto backdrop-blur bg-black/30">
-      <div className="flex items-center justify-center min-h-screen min-w-full">
-        <div className="bg-white rounded-lg h-full md:w-2/3 xl:w-1/3 tracking-wider p-5 relative">
+    <div className="fixed inset-0 z-10 h-full w-full overflow-y-auto bg-black/30 backdrop-blur">
+      <div className="flex min-h-screen min-w-full items-center justify-center">
+        <div className="relative h-full rounded-lg border border-border bg-surface p-5 tracking-wide md:w-2/3 xl:w-1/3">
           <Image
             src={close}
             alt="close"
             width={50}
             height={50}
-            className="absolute right-5 top-5 cursor-pointer"
+            className="menu-icon absolute right-5 top-5 cursor-pointer"
             onClick={() => setIsModalOpen(!showModal)}
           />
-          <h2 className="underline text-3xl font-bold">{ title }</h2>
-          <p>{ year }</p>
-          <Image src={`/screenshot/${img}`} alt="screenshot" className="w-full mt-5" width={ 700 } height={400} />
-          <p className="mt-5 mb-5">{ description }</p>
-          <a href={ url } target="_blank" className="bg-black text-white px-4 py-2 rounded mt-5">See Live Demo</a>
+          <h2 className="font-display text-3xl font-semibold text-fg">{ title }</h2>
+          <p className="font-mono text-xs text-fg-muted">{ year }</p>
+          <Image src={`/screenshot/${img}`} alt="screenshot" className="mt-5 w-full" width={ 700 } height={400} />
+          <p className="mb-5 mt-5 leading-relaxed text-fg-muted">{ description }</p>
+          <a href={ url } target="_blank" className="mt-5 rounded-md bg-accent px-4 py-2 font-semibold text-accent-fg no-underline hover:no-underline">See Live Demo</a>
         </div>
       </div>
     </div>

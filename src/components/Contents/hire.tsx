@@ -1,6 +1,6 @@
-
 import { sectionLabels, hireContent, hireButtonLabel } from "@/consts"
 import { useLocale } from "@/hooks/useLocale"
+import SectionHeading from "@/components/SectionHeading"
 
 export const Hire = () => {
   const { locale } = useLocale()
@@ -8,13 +8,11 @@ export const Hire = () => {
   const paragraph = hireContent && hireContent[locale] || ''
   const buttonLabel = hireButtonLabel && hireButtonLabel[locale] || ''
   return (
-    <div className="w-10/12 md:w-8/12 pb-5p">
-      <h1 className="text-4xl font-bold tracking-md mb-5 underline">{label}</h1>
-      <div className="text-xl tracking-wider">
-        <div dangerouslySetInnerHTML={{ __html: paragraph }}></div>
-      </div>
-      <div className="mt-10 mx-auto text-center btn btn-primary">
-        <a href="/contact" className="text-lg rounded-md py-2 px-4 text-white bg-black transition-colors duration-300">{buttonLabel}</a>
+    <div className="w-10/12 py-[var(--section-padding-y)] md:w-8/12">
+      <SectionHeading index={`05 — ${label}`} title={label} />
+      <div className="max-w-[46rem]">
+        <div className="mb-8 text-xl leading-relaxed text-fg-muted" dangerouslySetInnerHTML={{ __html: paragraph }}></div>
+        <a href="/contact" className="inline-flex items-center rounded-md bg-accent px-7 py-3.5 text-lg font-semibold text-accent-fg no-underline hover:no-underline">{buttonLabel}</a>
       </div>
     </div>
   )

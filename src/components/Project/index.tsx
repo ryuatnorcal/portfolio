@@ -16,27 +16,18 @@ const Project = ({ data }: {data: ProjectType[]}) => {
       }
     }
   }
-  const renderExperience = (data: ProjectType[]) => data.map((prj, i) => {
-    let borderClass = ''
-    borderClass = i == 0 ? 'p-2 lg:p-5' : 'p-3 lg:p-5 '
-    if (i !== 0 && i % 2 === 0) {
-      borderClass += 'xs:border-l-none xl:border-l border-black'
-    } 
-    if (i !== 0 && i % 2 !== 0) {
-      borderClass += i % 3 === 0 ?
-      'xs:border-none lg:border-l xl:border-none border-black' : 'xs:border-l-none lg:border-l border-black'
-    }
-   
+  const renderExperience = (data: ProjectType[]) => data.map((prj) => {
     return (
       <div
         key={prj._id}
-        className={`w-full lg:w-1/2 xl:w-1/3 cursor-pointer hover:bg-gray-100 hover:text-gray-700 ${borderClass}`}
+        className="cursor-pointer rounded-lg border border-border bg-surface p-6"
         onClick={()=>onClickCard(prj)}
       >
-        
-        <span className="underline font-bold text-2xl">{ prj.title }</span>
-        <p>{ prj.year }</p>
-        <p className="mt-3">
+        <div className="mb-2.5 flex items-baseline justify-between gap-3">
+          <span className="font-display text-xl font-semibold text-fg">{ prj.title }</span>
+          <span className="whitespace-nowrap font-mono text-[11px] text-fg-muted">{ prj.year }</span>
+        </div>
+        <p className="m-0 leading-relaxed text-fg-muted">
           { prj.description }
         </p>
       </div>
@@ -44,7 +35,7 @@ const Project = ({ data }: {data: ProjectType[]}) => {
   }) || []
 
   return (
-    <div className="flex flex-wrap tracking-wider text-xl">
+    <div className="grid grid-cols-1 gap-5 md:grid-cols-2 xl:grid-cols-3">
       {renderExperience(data)}
       <Modal
         showModal={isModalOpen}
