@@ -3,24 +3,45 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useLocale } from "@/hooks/useLocale"
-import { useTheme } from "@/hooks/useTheme"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import logo from '../../../public/icons/barcode.gif'
 import menu from '../../../public/icons/icons8-menu.svg'
 import close from '../../../public/icons/icons8-close.svg'
 import './styles.css'
-
-const navClass = (active: boolean) =>
-  `inline-block px-4 py-2 rounded-pill text-sm font-medium no-underline transition-colors duration-150 ${
-    active
-      ? "bg-accent text-accent-fg hover:no-underline"
-      : "text-fg-muted hover:bg-surface-2 hover:no-underline"
-  }`
-
 const Menu = () => {
   const { locale, setLocale } = useLocale()
   const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState<boolean>(false)
+  const [inverted, setInverted] = useState<boolean>(false)
+  const navRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
+
+  // Invert once the banner's bottom edge has scrolled up under the nav, and
+  // go back to normal when scrolling up into the banner again. Pages without
+  // a banner keep the normal colours.
+  useEffect(() => {
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const banner = document.getElementById(BANNER_ID)
+      const navHeight = navRef.current?.offsetHeight ?? 0
+      setInverted(!!banner && banner.getBoundingClientRect().bottom <= navHeight)
+    }
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update) }
+
+    update()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    // the banner mounts after content loads, so re-check when the DOM changes
+    const observer = new MutationObserver(schedule)
+    observer.observe(document.body, { childList: true, subtree: true })
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+      observer.disconnect()
+    }
+  }, [pathname])
 
   const handleLocale = () => {
     if (locale === 'en') {
@@ -35,30 +56,28 @@ const Menu = () => {
     setOpen(!open)
   }
 
-  const themeLabel = theme === "dark" ? "● DARK" : "○ LIGHT"
-
   return (
     <div className='w-screen overflow-hidden'>
-      <nav className="flex w-screen overflow-x-hidden justify-between items-center pt-3 pb-3 px-10 fixed w-full bg-white z-50">
+      <nav ref={navRef} className={`flex w-screen overflow-x-hidden justify-between items-center pt-3 pb-3 px-10 fixed w-full z-50 transition-colors duration-300 ${surface}`}>
         <div className="flex items-center">
-            <Image src={logo} alt="logo" />
+            <Image src={logo} alt="logo" className={iconFilter} />
         </div>
         {/* desktop menu */}
         <div className="hidden lg:flex items-center">
-          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 mr-4 py-2 rounded-md ${pathname === '/'? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Home</Link>
-          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block mr-4 px-4 rounded-md py-2 ${pathname === '/about'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>About</Link>
-          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block mr-4 rounded-md px-4 py-2 ${pathname==='/contact'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Contact</Link>
-          <button className="inline-block px-4 py-2 rounded-md text-black bg-white hover:text-white hover:bg-black transition-colors duration-300" onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
+          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 mr-4 py-2 rounded-md ${itemColors(pathname === '/')} transition-colors duration-300`}>Home</Link>
+          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block mr-4 px-4 rounded-md py-2 ${itemColors(pathname === '/about')} transition-colors duration-300`}>About</Link>
+          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block mr-4 rounded-md px-4 py-2 ${itemColors(pathname === '/contact')} transition-colors duration-300`}>Contact</Link>
+          <button className={`inline-block px-4 py-2 rounded-md ${itemColors()} transition-colors duration-300`} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
         </div>
         <div onClick={handleMenu} className="lg:hidden">
           {open ?
-            <Image src={close} alt="close" className="menu-icon cursor-pointer" />
-            : <Image src={menu} alt="menu" className="menu-icon cursor-pointer" />
+            <Image src={close} alt="close" className="cursor-pointer" />
+            : <Image src={menu} alt="menu" className="cursor-pointer" />
           }
         </div>
       </nav>
       {/* Mobile menu below */}
-      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[74px] right-[-250px] bg-white ${open ? 'slideIn': 'slideOut'}`}>
+      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[74px] right-[-250px] bg-white z-50 ${open ? 'slideIn': 'slideOut'}`}>
         <Link onClick={handleMenu} href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${pathname === '/'? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Home</Link>
         <Link onClick={handleMenu} href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${pathname === '/about'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>About</Link>
         <Link onClick={handleMenu} href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block px-4 py-2 w-full ${pathname==='/contact'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Contact</Link>

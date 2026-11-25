@@ -11,7 +11,8 @@ const Home = () => {
   
   return !isLoading ? (
     <main className="flex-row min-h-screen items-center justify-center ">
-      <div className="relative overflow-hidden text-white">
+      {/* id is used by the Menu to invert its colours once scrolled past */}
+      <div id="hero-banner" className="relative overflow-hidden text-white">
         <LiquidBanner className="absolute inset-0" images={backgrounds} />
         <div className="relative z-10">
           <Page sectionName="hero">
