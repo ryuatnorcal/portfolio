@@ -39,22 +39,16 @@ const Menu = () => {
 
   return (
     <div className='w-screen overflow-hidden'>
-      <nav className="sticky top-0 z-10 flex w-full items-center justify-between border-b border-border bg-[color-mix(in_oklch,var(--bg)_82%,transparent)] px-8 py-4 backdrop-blur-[10px]">
-        <Link href={{ pathname: '/', query: { selectedLocale: locale } }} className="font-display text-xl font-bold tracking-tight text-fg no-underline hover:no-underline">
-          Ryu
-        </Link>
-        <div className="hidden lg:flex items-center gap-1.5">
-          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={navClass(pathname === '/')}>Home</Link>
-          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={navClass(pathname === '/about')}>About</Link>
-          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={navClass(pathname==='/contact')}>Contact</Link>
-          <button className={navClass(false)} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="ml-2 inline-flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-1.5 font-mono text-[11px] tracking-wide text-fg-muted"
-          >
-            {themeLabel}
-          </button>
+      <nav className="flex w-screen overflow-x-hidden justify-between items-center pt-3 pb-3 px-10 fixed w-full bg-white z-50">
+        <div className="flex items-center">
+            <Image src={logo} alt="logo" />
+        </div>
+        {/* desktop menu */}
+        <div className="hidden lg:flex items-center">
+          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 mr-4 py-2 rounded-md ${pathname === '/'? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Home</Link>
+          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block mr-4 px-4 rounded-md py-2 ${pathname === '/about'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>About</Link>
+          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block mr-4 rounded-md px-4 py-2 ${pathname==='/contact'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Contact</Link>
+          <button className="inline-block px-4 py-2 rounded-md text-black bg-white hover:text-white hover:bg-black transition-colors duration-300" onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
         </div>
         <div onClick={handleMenu} className="lg:hidden">
           {open ?
@@ -63,12 +57,12 @@ const Menu = () => {
           }
         </div>
       </nav>
-      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[73px] right-[-250px] bg-surface border-l border-border z-20 ${open ? 'slideIn': 'slideOut'}`}>
-        <Link onClick={handleMenu} href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full no-underline ${pathname === '/'? 'bg-accent text-accent-fg' : 'text-fg-muted hover:bg-surface-2'}`}>Home</Link>
-        <Link onClick={handleMenu} href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full no-underline ${pathname === '/about'? 'bg-accent text-accent-fg':'text-fg-muted hover:bg-surface-2'}`}>About</Link>
-        <Link onClick={handleMenu} href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block px-4 py-2 w-full no-underline ${pathname==='/contact'? 'bg-accent text-accent-fg':'text-fg-muted hover:bg-surface-2'}`}>Contact</Link>
-        <button className="inline-block w-full text-fg-muted hover:bg-surface-2 px-4 py-2 text-left" onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
-        <button type="button" className="mx-4 mt-3 inline-flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-1.5 font-mono text-[11px] tracking-wide text-fg-muted" onClick={toggleTheme}>{themeLabel}</button>
+      {/* Mobile menu below */}
+      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[74px] right-[-250px] bg-white ${open ? 'slideIn': 'slideOut'}`}>
+        <Link onClick={handleMenu} href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${pathname === '/'? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Home</Link>
+        <Link onClick={handleMenu} href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${pathname === '/about'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>About</Link>
+        <Link onClick={handleMenu} href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block px-4 py-2 w-full ${pathname==='/contact'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Contact</Link>
+        <button className="inline-block w-full text-black bg-white hover:text-white hover:bg-black transition-colors duration-300  px-4 py-2 text-left" onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
       </div>
     </div>
   )
