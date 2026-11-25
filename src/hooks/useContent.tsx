@@ -33,7 +33,18 @@ interface ContentProps {
   hero: heroFullType,
   service:ServiceFullType,
   email_labels: EmailLabelsFullType,
-  isLoading: boolean
+  isLoading: boolean,
+  hasError: boolean
+}
+
+// Fetch an API list endpoint; reject on HTTP errors or a non-array body so
+// callers never run array methods on an `{ error }` response.
+const fetchList = async <T,>(url: string): Promise<T[]> => {
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`${url} responded ${res.status}`)
+  const data = await res.json()
+  if (!Array.isArray(data)) throw new Error(`${url} returned unexpected data`)
+  return data
 }
 
 export const ContentContext = createContext<ContentProps>(initialContentProps);
@@ -44,6 +55,11 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
   const [isLoading, setLoading] = useState<boolean>(true)
+  const [hasError, setError] = useState<boolean>(false)
+  const onError = (error: unknown) => {
+    console.error('Failed to load content:', error)
+    setError(true)
+  }
 
   useEffect(() => {
     if (Object.keys(bio).length != 0
@@ -55,29 +71,28 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   }, [bio, experience, project, techStack])
   
   useEffect(() => {
-    fetch('/api/bio')
-      .then((res) => res.json())
-      .then((data: BioType[]) => {
+    fetchList<BioType>('/api/bio')
+      .then((data) => {
         const en = data.find((d) => d.locale === 'en')
         const jp = data.find((d) => d.locale === 'jp')
         bioDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
+      .catch(onError)
   }, [locale])
 
   useEffect(() => {
-    fetch('/api/project')
-      .then((res) => res.json())
-      .then((data: ProjectType[]) => {
+    fetchList<ProjectType>('/api/project')
+      .then((data) => {
         const en = data.filter((d) => d.locale === 'en')
         const jp = data.filter((d) => d.locale === 'jp')
         projectDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
+      .catch(onError)
   }, [locale])
 
   useEffect(() => {
-    fetch('/api/techstack')
-      .then((res) => res.json())
-      .then((data: TechStackType[]) => {
+    fetchList<TechStackType>('/api/techstack')
+      .then((data) => {
         const frontend = {
           en: data.filter((d) => d.label === 'Frontend' && d.locale === 'en'),
           jp: data.filter((d) => d.label === 'Frontend' && d.locale === 'jp')
@@ -103,17 +118,18 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
           }
         })
       })
+      .catch(onError)
   }, [locale])
 
   useEffect(() => {
-    fetch('/api/experience')
-      .then((res) => res.json())
-      .then((data:ExperienceType[]) => {
+    fetchList<ExperienceType>('/api/experience')
+      .then((data) => {
         const sortedData = data.sort((a, b) => Number(b.seq) - Number(a.seq))
         const en = sortedData.filter((d) => d.locale === 'en')
         const jp = sortedData.filter((d) => d.locale === 'jp')
         experienceDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
+      .catch(onError)
   }, [locale])
 
   
@@ -126,7 +142,8 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     hero,
     service,
     email_labels,
-    isLoading
+    isLoading,
+    hasError
   }
 
   return (

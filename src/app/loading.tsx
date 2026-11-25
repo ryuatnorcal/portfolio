@@ -1,7 +1,30 @@
+'use client'
+import { useContent } from "@/hooks/useContent"
+
 const Loading = () => {
+  const { hasError } = useContent()
+
+  if (hasError) {
+    return (
+      <div className="w-screen h-screen flex justify-center items-center flex-col" role="alert">
+        <div className="text-center tracking-wider text-xl">
+          <div>Sorry, the content couldn&apos;t be loaded.</div>
+          <div>コンテンツを読み込めませんでした。</div>
+        </div>
+        <button
+          type="button"
+          onClick={() => window.location.reload()}
+          className="mt-6 px-4 py-2 rounded-md border border-current hover:bg-white hover:text-black transition-colors duration-300"
+        >
+          Retry / 再読み込み
+        </button>
+      </div>
+    )
+  }
+
   return (
-    <div className="flex h-screen w-screen flex-col items-center justify-center bg-bg text-fg">
-    
+    <div className="w-screen h-screen flex justify-center items-center flex-col">
+
         <div
           className="inline-block h-8 w-8 animate-spin rounded-full border-4 border-solid border-current border-e-transparent align-[-0.125em] text-accent motion-reduce:animate-[spin_1.5s_linear_infinite]"
           role="status">
@@ -17,7 +40,7 @@ const Loading = () => {
           </div>
           <div>しばらくお待ちください。</div>
         </div>
-    </div>  
+    </div>
   )
 }
 
