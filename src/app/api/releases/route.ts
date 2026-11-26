@@ -1,8 +1,8 @@
 import { NextResponse } from "next/server";
 
-// Release notes from this project's GitHub repo, cached for an hour so we
-// stay well under GitHub's unauthenticated rate limit (60 req/hour/IP).
-export const revalidate = 3600
+// Release notes from this project's GitHub repo, cached for 5 minutes: new releases
+// show up quickly, and it stays well under GitHub's rate limit (60 req/hour/IP).
+export const revalidate = 300
 
 const REPO = process.env.GITHUB_REPO || "ryuatnorcal/portfolio"
 
@@ -26,7 +26,7 @@ export const GET = async () => {
 
     const res = await fetch(`https://api.github.com/repos/${REPO}/releases?per_page=10`, {
       headers,
-      next: { revalidate: 3600 },
+      next: { revalidate: 300 },
     })
     if (!res.ok) throw new Error(`GitHub responded ${res.status}`)
 

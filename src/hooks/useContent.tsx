@@ -42,12 +42,27 @@ interface ContentProps {
   hasError: boolean
 }
 
+// Fetch JSON, retrying a couple of times on server or network errors: a busy
+// database can refuse a request now and then, and a second try succeeds.
+const RETRY_DELAYS_MS = [400, 1200]
+const fetchJson = async (url: string): Promise<unknown> => {
+  for (let attempt = 0; ; attempt++) {
+    try {
+      const res = await fetch(url)
+      if (res.ok) return await res.json()
+      // 4xx won't get better by retrying
+      if (res.status < 500 || attempt >= RETRY_DELAYS_MS.length) throw new Error(`${url} responded ${res.status}`)
+    } catch (error) {
+      if (attempt >= RETRY_DELAYS_MS.length) throw error
+    }
+    await new Promise((resolve) => setTimeout(resolve, RETRY_DELAYS_MS[attempt]))
+  }
+}
+
 // Fetch an API list endpoint; reject on HTTP errors or a non-array body so
 // callers never run array methods on an `{ error }` response.
 const fetchList = async <T,>(url: string): Promise<T[]> => {
-  const res = await fetch(url)
-  if (!res.ok) throw new Error(`${url} responded ${res.status}`)
-  const data = await res.json()
+  const data = await fetchJson(url)
   if (!Array.isArray(data)) throw new Error(`${url} returned unexpected data`)
   return data
 }
@@ -78,9 +93,8 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   }, [bio, experience, project, techStack, site])
 
   useEffect(() => {
-    fetch('/api/site')
-      .then((res) => res.ok ? res.json() : Promise.reject(new Error(`/api/site responded ${res.status}`)))
-      .then(setSite)
+    fetchJson('/api/site')
+      .then((data) => setSite(data as NonNullable<typeof site>))
       .catch(onError)
   }, [locale])
   
