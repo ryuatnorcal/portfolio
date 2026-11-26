@@ -8,19 +8,19 @@ import {
   techStackReducer
 } from "@/reducer";
 import {
-  heroFullType,
   ProjectFullType,
   BioFullType,
   ExperienceFullType,
   TechStackFullType,
   ServiceFullType,
-  EmailLabelsFullType,
   BioType,
   ExperienceType,
   ProjectType,
   TechStackType
 } from "@/const";
-import { hero, service, email_labels, initialContentProps } from "@/consts";
+import { initialContentProps } from "@/consts";
+import { siteTextDefaults, SiteTextValues, Locale } from "@/content/siteText";
+import { useLocale } from "@/hooks/useLocale";
 interface ContentProviderProps {
   children: React.ReactNode,
   locale: string
@@ -30,9 +30,8 @@ interface ContentProps {
   experience: ExperienceFullType,
   project: ProjectFullType,
   techStack: TechStackFullType,
-  hero: heroFullType,
-  service:ServiceFullType,
-  email_labels: EmailLabelsFullType,
+  service: ServiceFullType,
+  text: SiteTextValues,
   isLoading: boolean,
   hasError: boolean
 }
@@ -54,6 +53,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [experience, experienceDispatch] = useReducer(experienceReducer, {})
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
+  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType } | null>(null)
   const [isLoading, setLoading] = useState<boolean>(true)
   const [hasError, setError] = useState<boolean>(false)
   const onError = (error: unknown) => {
@@ -65,10 +65,18 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     if (Object.keys(bio).length != 0
       && Object.keys(experience).length != 0
       && Object.keys(project).length != 0
-      && Object.keys(techStack).length != 0) {
+      && Object.keys(techStack).length != 0
+      && site) {
         setTimeout(() => setLoading(false), 350)
       }
-  }, [bio, experience, project, techStack])
+  }, [bio, experience, project, techStack, site])
+
+  useEffect(() => {
+    fetch('/api/site')
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error(`/api/site responded ${res.status}`)))
+      .then(setSite)
+      .catch(onError)
+  }, [locale])
   
   useEffect(() => {
     fetchList<BioType>('/api/bio')
@@ -139,9 +147,8 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     ...experience,
     ...project,
     ...techStack,
-    hero,
-    service,
-    email_labels,
+    service: site?.services || { en: [], jp: [] },
+    text: site?.text || siteTextDefaults,
     isLoading,
     hasError
   }
@@ -154,3 +161,11 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
 }
 
 export const useContent = () => useContext(ContentContext)
+
+// Returns a lookup for editable site text (keys in src/content/siteText.ts) in
+// the current locale.
+export const useText = () => {
+  const { text } = useContext(ContentContext)
+  const { locale } = useLocale()
+  return (key: string) => text[key]?.[locale as Locale] ?? siteTextDefaults[key]?.[locale as Locale] ?? ''
+}

@@ -1,12 +1,11 @@
-import { sectionLabels, hireContent, hireButtonLabel } from "@/consts"
-import { useLocale } from "@/hooks/useLocale"
+import { useText } from "@/hooks/useContent"
 import SectionHeading from "@/components/SectionHeading"
 
 export const Hire = () => {
-  const { locale } = useLocale()
-  const label = sectionLabels && sectionLabels.hire[locale] || ''
-  const paragraph = hireContent && hireContent[locale] || ''
-  const buttonLabel = hireButtonLabel && hireButtonLabel[locale] || ''
+  const t = useText()
+  const label = t('section.hire')
+  const paragraph = t('hire.content')
+  const buttonLabel = t('hire.button')
   return (
     <div className="w-10/12 py-[var(--section-padding-y)] md:w-8/12">
       <SectionHeading index={`05 — ${label}`} title={label} />
