@@ -21,3 +21,16 @@ const IMAGE_EXTS = /\.(jpe?g|png|webp|avif)$/i
 // used to read anything else in the bucket.
 export const isBackgroundKey = (key: string) =>
   key.startsWith(backgroundsPrefix) && IMAGE_EXTS.test(key) && !key.includes('..')
+
+// Project / internal tool popup media: image and video files under this
+// prefix, picked in the dashboard and served through /api/media/<key>.
+export const mediaPrefix = process.env.R2_MEDIA_PREFIX ?? 'Project and Tools/'
+const MEDIA_EXTS = /\.(jpe?g|png|webp|avif|gif|svg|mp4|webm|mov|m4v|ogv)$/i
+
+export const isMediaKey = (key: string) =>
+  key.startsWith(mediaPrefix) && MEDIA_EXTS.test(key) && !key.includes('..')
+
+// Path of the media route for one key; each segment is encoded so spaces etc.
+// survive, and the path still ends in the file extension (see utils/media).
+export const MEDIA_ROUTE = '/api/media/'
+export const mediaUrl = (key: string) => MEDIA_ROUTE + key.split('/').map(encodeURIComponent).join('/')
