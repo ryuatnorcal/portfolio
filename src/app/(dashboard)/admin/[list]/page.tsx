@@ -23,17 +23,18 @@ const load = (name: CollectionName, locale: string) => {
   }
 }
 
-export default async function ListPage({ params, searchParams }: { params: { list: string }, searchParams: { locale?: string } }) {
-  const list = lists[params.list]
+export default async function ListPage({ params, searchParams }: { params: Promise<{ list: string }>, searchParams: Promise<{ locale?: string }> }) {
+  const { list: slug } = await params
+  const list = lists[slug]
   if (!list) notFound()
   await guardAdminPage()
-  const locale = pickLocale(searchParams.locale)
+  const locale = pickLocale((await searchParams).locale)
   const items = await load(list.name, locale) as CollectionItem[]
 
   return (
     <>
       <PageHeader title={collections[list.name].title} description={list.description} />
-      <LocaleTabs basePath={`/admin/${params.list}`} locale={locale} />
+      <LocaleTabs basePath={`/admin/${slug}`} locale={locale} />
       <CollectionEditor key={locale} name={list.name} locale={locale} items={items} />
     </>
   )

@@ -3,9 +3,9 @@ import { guardAdminPage } from "@/utils/admin";
 import BioEditor from "@/components/Admin/BioEditor";
 import { LocaleTabs, PageHeader, pickLocale } from "@/components/Admin/ui";
 
-export default async function BioPage({ searchParams }: { searchParams: { locale?: string } }) {
+export default async function BioPage({ searchParams }: { searchParams: Promise<{ locale?: string }> }) {
   await guardAdminPage()
-  const locale = pickLocale(searchParams.locale)
+  const locale = pickLocale((await searchParams).locale)
   const bio = await prisma.bio.findUnique({ where: { locale } })
   return (
     <>
