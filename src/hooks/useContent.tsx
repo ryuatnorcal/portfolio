@@ -21,9 +21,9 @@ import {
 import { initialContentProps } from "@/consts";
 import { siteTextDefaults, SiteTextValues, Locale } from "@/content/siteText";
 import { useLocale } from "@/hooks/useLocale";
-import type { InternalToolItem } from "@/content/load";
 
-export type InternalToolsFullType = { [locale: string]: InternalToolItem[] }
+// Internal tools use the same card shape as projects.
+export type InternalToolsFullType = { [locale: string]: ProjectType[] }
 interface ContentProviderProps {
   children: React.ReactNode,
   locale: string
