@@ -1,6 +1,7 @@
 import { useState } from "react"
 import { ProjectType,ProjectModalType } from "@/const"
 import Modal from "../Modal"
+import Window from "../Window"
 const Project = ({ data }: {data: ProjectType[]}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelection] = useState<ProjectModalType | {}>({})
@@ -20,16 +21,18 @@ const Project = ({ data }: {data: ProjectType[]}) => {
     return (
       <div
         key={prj._id}
-        className="cursor-pointer rounded-lg border border-border bg-surface p-6"
+        role="button"
+        tabIndex={0}
+        className="cursor-pointer"
         onClick={()=>onClickCard(prj)}
+        onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClickCard(prj) } }}
       >
-        <div className="mb-2.5 flex items-baseline justify-between gap-3">
-          <span className="font-display text-xl font-semibold text-fg">{ prj.title }</span>
-          <span className="whitespace-nowrap font-mono text-[11px] text-fg-muted">{ prj.year }</span>
-        </div>
-        <p className="m-0 leading-relaxed text-fg-muted">
-          { prj.description }
-        </p>
+        <Window title={prj.title} className="h-full">
+          <span className="mb-2.5 block font-mono text-[11px] text-fg-muted">{ prj.year }</span>
+          <p className="m-0 leading-relaxed text-fg-muted">
+            { prj.description }
+          </p>
+        </Window>
       </div>
     )
   }) || []
