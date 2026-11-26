@@ -36,7 +36,7 @@ const Home = () => {
       <div id="hero-banner" className="relative overflow-hidden text-white">
         {backgrounds && <LiquidBanner className="absolute inset-0" images={backgrounds} />}
         {/* at least 80% of the screen tall, hero text centred vertically */}
-        <div className="relative z-10 flex min-h-[80vh] items-center">
+        <div className="relative z-10 flex min-h-[90vh] items-center">
           <Page sectionName="hero">
             <Hero />
           </Page>
