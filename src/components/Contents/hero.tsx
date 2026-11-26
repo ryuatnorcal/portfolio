@@ -24,7 +24,7 @@ export const Hero = ({ }: HeroProps) => {
         className="mb-5 max-w-[20ch] font-display text-[clamp(2.75rem,7vw,5.5rem)] font-semibold leading-tight tracking-tight"
         dangerouslySetInnerHTML={{ __html: title }}
       />
-      <p className="mb-7 max-w-[40ch] font-body text-xl leading-relaxed text-fg-muted">
+      <p className="mb-7 max-w-[40ch] font-body text-xl leading-relaxed text-white/85 drop-shadow-md">
         { subtitle }
       </p>
       {catchphrase ? (
@@ -32,7 +32,7 @@ export const Hero = ({ }: HeroProps) => {
           { catchphrase }
         </span>
       ) : null}
-      <span className="block font-mono text-sm text-fg-muted">
+      <span className="block font-mono text-sm text-white/80 drop-shadow-md">
         {location}
       </span>
     </div>

@@ -3,24 +3,48 @@ import Image from "next/image"
 import Link from "next/link"
 import { usePathname } from "next/navigation"
 import { useLocale } from "@/hooks/useLocale"
-import { useTheme } from "@/hooks/useTheme"
-import { useState } from "react"
+import { useEffect, useRef, useState } from "react"
+import logo from '../../../public/icons/barcode.gif'
 import menu from '../../../public/icons/icons8-menu.svg'
 import close from '../../../public/icons/icons8-close.svg'
 import './styles.css'
 
-const navClass = (active: boolean) =>
-  `inline-block px-4 py-2 rounded-pill text-sm font-medium no-underline transition-colors duration-150 ${
-    active
-      ? "bg-accent text-accent-fg hover:no-underline"
-      : "text-fg-muted hover:bg-surface-2 hover:no-underline"
-  }`
+// Element the nav stays light over; once scrolled past it the nav inverts.
+const BANNER_ID = 'hero-banner'
 
 const Menu = () => {
   const { locale, setLocale } = useLocale()
-  const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState<boolean>(false)
+  const [inverted, setInverted] = useState<boolean>(false)
+  const navRef = useRef<HTMLElement>(null)
   const pathname = usePathname()
+
+  // Invert once the banner's bottom edge has scrolled up under the nav, and
+  // go back to normal when scrolling up into the banner again. Pages without
+  // a banner keep the normal colours.
+  useEffect(() => {
+    let frame = 0
+    const update = () => {
+      frame = 0
+      const banner = document.getElementById(BANNER_ID)
+      const navHeight = navRef.current?.offsetHeight ?? 0
+      setInverted(!!banner && banner.getBoundingClientRect().bottom <= navHeight)
+    }
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update) }
+
+    update()
+    window.addEventListener('scroll', schedule, { passive: true })
+    window.addEventListener('resize', schedule)
+    // the banner mounts after content loads, so re-check when the DOM changes
+    const observer = new MutationObserver(schedule)
+    observer.observe(document.body, { childList: true, subtree: true })
+    return () => {
+      cancelAnimationFrame(frame)
+      window.removeEventListener('scroll', schedule)
+      window.removeEventListener('resize', schedule)
+      observer.disconnect()
+    }
+  }, [pathname])
 
   const handleLocale = () => {
     if (locale === 'en') {
@@ -35,40 +59,41 @@ const Menu = () => {
     setOpen(!open)
   }
 
-  const themeLabel = theme === "dark" ? "● DARK" : "○ LIGHT"
+  // Colours for a nav item; `active` is the current page.
+  const itemColors = (active = false) => {
+    if (inverted) return active ? 'text-black bg-white' : 'text-white bg-black hover:text-black hover:bg-white'
+    return active ? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'
+  }
+  const surface = inverted ? 'bg-black' : 'bg-white'
+  // logo and icons are black artwork: invert them on the dark nav
+  const iconFilter = `transition-[filter] duration-300 ${inverted ? 'invert' : ''}`
 
   return (
     <div className='w-screen overflow-hidden'>
-      <nav className="sticky top-0 z-10 flex w-full items-center justify-between border-b border-border bg-[color-mix(in_oklch,var(--bg)_82%,transparent)] px-8 py-4 backdrop-blur-[10px]">
-        <Link href={{ pathname: '/', query: { selectedLocale: locale } }} className="font-display text-xl font-bold tracking-tight text-fg no-underline hover:no-underline">
-          Ryu
-        </Link>
-        <div className="hidden lg:flex items-center gap-1.5">
-          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={navClass(pathname === '/')}>Home</Link>
-          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={navClass(pathname === '/about')}>About</Link>
-          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={navClass(pathname==='/contact')}>Contact</Link>
-          <button className={navClass(false)} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
-          <button
-            type="button"
-            onClick={toggleTheme}
-            className="ml-2 inline-flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-1.5 font-mono text-[11px] tracking-wide text-fg-muted"
-          >
-            {themeLabel}
-          </button>
+      <nav ref={navRef} className={`flex w-screen overflow-x-hidden justify-between items-center pt-3 pb-3 px-10 fixed w-full z-50 transition-colors duration-300 ${surface}`}>
+        <div className="flex items-center">
+            <Image src={logo} alt="logo" className={iconFilter} />
+        </div>
+        {/* desktop menu */}
+        <div className="hidden lg:flex items-center">
+          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 mr-4 py-2 rounded-md ${itemColors(pathname === '/')} transition-colors duration-300`}>Home</Link>
+          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block mr-4 px-4 rounded-md py-2 ${itemColors(pathname === '/about')} transition-colors duration-300`}>About</Link>
+          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block mr-4 rounded-md px-4 py-2 ${itemColors(pathname === '/contact')} transition-colors duration-300`}>Contact</Link>
+          <button className={`inline-block px-4 py-2 rounded-md ${itemColors()} transition-colors duration-300`} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
         </div>
         <div onClick={handleMenu} className="lg:hidden">
           {open ?
-            <Image src={close} alt="close" className="menu-icon cursor-pointer" />
-            : <Image src={menu} alt="menu" className="menu-icon cursor-pointer" />
+            <Image src={close} alt="close" className={`cursor-pointer ${iconFilter}`} />
+            : <Image src={menu} alt="menu" className={`cursor-pointer ${iconFilter}`} />
           }
         </div>
       </nav>
-      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[73px] right-[-250px] bg-surface border-l border-border z-20 ${open ? 'slideIn': 'slideOut'}`}>
-        <Link onClick={handleMenu} href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full no-underline ${pathname === '/'? 'bg-accent text-accent-fg' : 'text-fg-muted hover:bg-surface-2'}`}>Home</Link>
-        <Link onClick={handleMenu} href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full no-underline ${pathname === '/about'? 'bg-accent text-accent-fg':'text-fg-muted hover:bg-surface-2'}`}>About</Link>
-        <Link onClick={handleMenu} href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block px-4 py-2 w-full no-underline ${pathname==='/contact'? 'bg-accent text-accent-fg':'text-fg-muted hover:bg-surface-2'}`}>Contact</Link>
-        <button className="inline-block w-full text-fg-muted hover:bg-surface-2 px-4 py-2 text-left" onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
-        <button type="button" className="mx-4 mt-3 inline-flex items-center gap-2 rounded-pill border border-border bg-surface px-3 py-1.5 font-mono text-[11px] tracking-wide text-fg-muted" onClick={toggleTheme}>{themeLabel}</button>
+      {/* Mobile menu below */}
+      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[74px] right-[-250px] z-50 transition-colors duration-300 ${surface} ${open ? 'slideIn': 'slideOut'}`}>
+        <Link onClick={handleMenu} href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${itemColors(pathname === '/')} transition-colors duration-300`}>Home</Link>
+        <Link onClick={handleMenu} href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${itemColors(pathname === '/about')} transition-colors duration-300`}>About</Link>
+        <Link onClick={handleMenu} href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block px-4 py-2 w-full ${itemColors(pathname === '/contact')} transition-colors duration-300`}>Contact</Link>
+        <button className={`inline-block w-full ${itemColors()} transition-colors duration-300  px-4 py-2 text-left`} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
       </div>
     </div>
   )

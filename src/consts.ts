@@ -126,6 +126,7 @@ export const emailSuccessMessage: emailSuccessMessageType = {
 
 export const initialContentProps = {
   isLoading: true,
+  hasError: false,
   bio: {
     en: {
       name: '',
