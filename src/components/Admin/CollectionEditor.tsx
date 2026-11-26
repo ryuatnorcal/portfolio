@@ -3,6 +3,7 @@ import { useState, useTransition } from "react"
 import { collections, CollectionName, CollectionField } from "@/content/collections"
 import { deleteItem, moveItem, saveItem, ActionResult } from "@/app/(dashboard)/admin/actions"
 import { buttonClass, FormError, inputClass } from "./ui"
+import MediaField from "./MediaField"
 
 export type CollectionItem = { id: number } & Record<string, string | number | null>
 
@@ -129,15 +130,19 @@ const ItemForm = ({ fields, title, initial, pending, error, onSave, onCancel }: 
   >
     <h3 className="font-semibold">{title}</h3>
     <div className="grid gap-4 md:grid-cols-2">
-      {fields.map((field) => (
-        <label key={field.name} className={`block ${field.type === 'textarea' ? 'md:col-span-2' : ''}`}>
-          <span className="mb-1 block text-sm font-medium">
-            {field.label}{field.required && <span className="text-fg-muted"> *</span>}
-          </span>
-          <FieldInput field={field} value={initial?.[field.name]} />
-          {field.hint && <span className="mt-1 block text-xs text-fg-muted">{field.hint}</span>}
-        </label>
-      ))}
+      {fields.map((field) => {
+        // the media picker has its own buttons, which shouldn't sit inside a <label>
+        const Wrapper = field.type === 'media' ? 'div' : 'label'
+        return (
+          <Wrapper key={field.name} className={`block ${field.type === 'textarea' || field.type === 'media' ? 'md:col-span-2' : ''}`}>
+            <span className="mb-1 block text-sm font-medium">
+              {field.label}{field.required && <span className="text-fg-muted"> *</span>}
+            </span>
+            <FieldInput field={field} value={initial?.[field.name]} />
+            {field.hint && <span className="mt-1 block text-xs text-fg-muted">{field.hint}</span>}
+          </Wrapper>
+        )
+      })}
     </div>
     <FormError error={error} />
     <div className="flex gap-2">
@@ -151,6 +156,9 @@ const FieldInput = ({ field, value }: { field: CollectionField, value?: string |
   const defaultValue = value == null ? '' : String(value)
   if (field.type === 'textarea') {
     return <textarea name={field.name} defaultValue={defaultValue} required={field.required} rows={6} className={inputClass} />
+  }
+  if (field.type === 'media') {
+    return <MediaField name={field.name} defaultValue={defaultValue} required={field.required} />
   }
   if (field.type === 'select') {
     return (

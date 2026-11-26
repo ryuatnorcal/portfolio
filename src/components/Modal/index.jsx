@@ -22,7 +22,9 @@ const ModalMedia = ({ value, title }) => {
     )
   }
   if (media.kind === 'video') {
-    return <video src={media.src} className={frame} controls playsInline preload="metadata" />
+    // capped at half the screen height (portrait recordings would otherwise be
+    // very tall); width follows so the border hugs the video
+    return <video src={media.src} className="mx-auto mt-5 block max-h-[50vh] w-auto max-w-full border-2 border-fg" controls playsInline preload="metadata" />
   }
   // a plain <img>: the URL can be on any host, which next/image would need configured
   // eslint-disable-next-line @next/next/no-img-element

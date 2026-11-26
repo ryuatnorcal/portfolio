@@ -3,7 +3,8 @@ import { TECH_CATEGORIES } from "@/content/siteText"
 // Editable lists in the dashboard. Shared by the editor UI and the server
 // actions, which only accept the fields listed here.
 
-export type FieldType = 'text' | 'textarea' | 'select' | 'url'
+// 'media' is a text field with a picker for files in R2 (R2_MEDIA_PREFIX)
+export type FieldType = 'text' | 'textarea' | 'select' | 'url' | 'media'
 
 export type CollectionField = {
   name: string,
@@ -36,7 +37,7 @@ const projectFields = ({ requireYearAndLink }: { requireYearAndLink: boolean }):
   { name: 'description', label: 'Description', type: 'textarea', required: true },
   { name: 'modalTitle', label: 'Popup title', type: 'text', hint: 'Leave empty for no detail popup' },
   { name: 'modalYear', label: 'Popup year', type: 'text' },
-  { name: 'modalImg', label: 'Popup image or video', type: 'text', hint: 'Image or video URL (e.g. Cloudflare Stream or a .mp4 link). Older entries can still use a screenshot file name.' },
+  { name: 'modalImg', label: 'Popup image or video', type: 'media', hint: 'Pick a file from R2, or paste an image or video URL (e.g. Cloudflare Stream or a .mp4 link). Older entries can still use a screenshot file name.' },
   { name: 'modalUrl', label: 'Popup URL', type: 'url' },
   { name: 'modalDescription', label: 'Popup description', type: 'textarea' },
 ]
