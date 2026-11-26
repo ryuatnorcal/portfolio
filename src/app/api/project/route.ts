@@ -1,14 +1,15 @@
-import { Project } from "@/models/project";
-import { connectToDb } from "@/utils/mongoose";
-import { NextResponse, NextRequest } from "next/server";
+import { prisma } from "@/utils/prisma";
+import { toCard } from "@/content/load";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
+export const dynamic = 'force-dynamic'
+
+export const GET = async () => {
   try {
-    await connectToDb()
-    const projects = await Project.find()
-    return NextResponse.json(projects)
+    const rows = await prisma.project.findMany({ orderBy: [{ position: 'asc' }, { id: 'asc' }] })
+    return NextResponse.json(rows.map(toCard))
   } catch (error) {
-    console.error('Failed to fetch Project:', error)
-    return NextResponse.json({ error: 'Failed to fetch Project' }, { status: 500 })
+    console.error('Failed to fetch projects:', error)
+    return NextResponse.json({ error: 'Failed to fetch projects' }, { status: 500 })
   }
 }

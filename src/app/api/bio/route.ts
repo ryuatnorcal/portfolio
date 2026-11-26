@@ -1,11 +1,11 @@
-import { Bio } from "@/models/bio";
-import { connectToDb } from "@/utils/mongoose";
-import { NextResponse, NextRequest } from "next/server";
+import { prisma } from "@/utils/prisma";
+import { NextResponse } from "next/server";
 
-export const GET = async (req: NextRequest) => {
+export const dynamic = 'force-dynamic'
+
+export const GET = async () => {
   try {
-    await connectToDb()
-    const bio = await Bio.find()
+    const bio = await prisma.bio.findMany()
     return NextResponse.json(bio)
   } catch (error) {
     console.error('Failed to fetch bio:', error)

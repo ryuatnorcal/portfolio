@@ -1,3 +1,4 @@
+import { defaultSectionFlags } from './content/sections'
 import {
   techStackLabelType,
   sectionLabelsType,
@@ -78,10 +79,32 @@ export const sectionLabels:sectionLabelsType = {
     en: 'PROJECTS',
     jp: 'プロジェクト'
   },
+  internalTools: {
+    en: 'INTERNAL TOOLS',
+    jp: '社内ツール'
+  },
   hire: {
     en: 'HIRE ME',
     jp: '採用方法'
   }
+}
+
+// Default text under the Internal Tools heading; edited in the dashboard.
+export const internalToolsDescription = {
+  en: 'Self-hosted tools I built and use every day to run my finances, work and training.',
+  jp: '日々の家計・仕事・トレーニングの管理のために自作し、毎日使っているセルフホスト型のツールです。',
+}
+
+// Labels for the right-hand section navigation (SideNav)
+export const sideNavLabels: { [section: string]: { [locale: string]: string } } = {
+  home: { en: 'Home', jp: 'ホーム' },
+  service: { en: 'Services', jp: 'サービス' },
+  tech: { en: 'Tech Stack', jp: '技術スタック' },
+  about: { en: 'About', jp: '自己紹介' },
+  experience: { en: 'Experience', jp: '経験' },
+  project: { en: 'Projects', jp: 'プロジェクト' },
+  internalTools: { en: 'Internal Tools', jp: '社内ツール' },
+  hire: { en: 'Hire Me', jp: '採用方法' },
 }
 
 export const techStackLabels: techStackLabelType = {
@@ -126,6 +149,7 @@ export const emailSuccessMessage: emailSuccessMessageType = {
 
 export const initialContentProps = {
   isLoading: true,
+  hasError: false,
   bio: {
     en: {
       name: '',
@@ -265,36 +289,15 @@ export const initialContentProps = {
     }
     
   },
-  hero: {
-    en: {
-      catchphrase: '',
-      location: '',
-      subtitle: '',
-      title: '',
-    },
-    jp: {
-      catchphrase: '',
-      location: '',
-      subtitle: '',
-      title: '',
-    }
-  },
   service: {
-    en: [''],
-    jp: ['']
+    en: [],
+    jp: []
   },
-  email_labels: {
-    en: {
-      name:'',
-      email:'',
-      message:'',
-      submit:'',
-    },
-    jp: {
-      name:'',
-      email:'',
-      message:'',
-      submit:'',
-    }
-  }
+  internalTools: {
+    en: [],
+    jp: []
+  },
+  sections: defaultSectionFlags,
+  // filled from siteTextDefaults by ContentProvider
+  text: {}
 }

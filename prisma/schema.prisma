@@ -1,0 +1,134 @@
+// Portfolio content, edited from the /admin dashboard.
+// Every content row belongs to one locale ("en" or "jp"); lists are shown in
+// ascending `position` order.
+
+generator client {
+  provider = "prisma-client"
+  output   = "../src/generated/prisma"
+  // extensionless imports: Next 14 webpack does not resolve ".js" to ".ts"
+  importFileExtension = ""
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Bio {
+  id          Int    @id @default(autoincrement())
+  locale      String @unique
+  name        String
+  title       String
+  description String
+
+  @@map("bio")
+}
+
+model Experience {
+  id          Int    @id @default(autoincrement())
+  locale      String
+  title       String
+  years       String
+  company     String
+  description String
+  position    Int    @default(0)
+
+  @@index([locale, position])
+  @@map("experience")
+}
+
+model Project {
+  id          Int    @id @default(autoincrement())
+  locale      String
+  title       String
+  year        String
+  description String
+  link        String
+  position    Int    @default(0)
+  // Optional short line shown under the title on the card.
+  subtitle    String?
+
+  // Optional detail popup; shown when modalTitle is set.
+  modalTitle       String?
+  modalYear        String?
+  // Image or video: a full URL (image, video file or Cloudflare Stream), or
+  // a file name in public/screenshot for older entries.
+  modalImg         String?
+  modalDescription String?
+  modalUrl         String?
+
+  @@index([locale, position])
+  @@map("project")
+}
+
+model TechStack {
+  id       Int    @id @default(autoincrement())
+  locale   String
+  category String // Frontend | Backend | DevOps | Tools
+  name     String
+  icon     String // file name in public/icons
+  position Int    @default(0)
+
+  @@index([locale, category, position])
+  @@map("tech_stack")
+}
+
+model Service {
+  id       Int    @id @default(autoincrement())
+  locale   String
+  name     String
+  position Int    @default(0)
+
+  @@index([locale, position])
+  @@map("service")
+}
+
+// "Internal Tools" on the About page: the same fields as Project, but year
+// and link are optional (tools often have no public link).
+model InternalTool {
+  id          Int     @id @default(autoincrement())
+  locale      String
+  title       String
+  year        String?
+  subtitle    String?
+  description String?
+  link        String?
+  position    Int     @default(0)
+
+  // Optional detail popup; shown when modalTitle is set. modalImg is an
+  // image or video URL, as for Project.
+  modalTitle       String?
+  modalYear        String?
+  modalImg         String?
+  modalDescription String?
+  modalUrl         String?
+
+  @@index([locale, position])
+  @@map("internal_tool")
+}
+
+// Show/hide switch for a site section, keyed as in src/content/sections.ts.
+// Sections without a row are shown.
+model SectionVisibility {
+  section String  @id
+  visible Boolean @default(true)
+
+  @@map("section_visibility")
+}
+
+// Short pieces of page copy and labels, keyed as in src/content/siteText.ts.
+model SiteText {
+  key    String
+  locale String
+  value  String
+
+  @@id([key, locale])
+  @@map("site_text")
+}
+
+// Display order of the hero banner images stored in R2.
+model BannerImage {
+  key      String @id // R2 object key
+  position Int    @default(0)
+
+  @@map("banner_image")
+}

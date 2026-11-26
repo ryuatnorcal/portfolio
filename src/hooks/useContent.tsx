@@ -8,19 +8,23 @@ import {
   techStackReducer
 } from "@/reducer";
 import {
-  heroFullType,
   ProjectFullType,
   BioFullType,
   ExperienceFullType,
   TechStackFullType,
   ServiceFullType,
-  EmailLabelsFullType,
   BioType,
   ExperienceType,
   ProjectType,
   TechStackType
 } from "@/const";
-import { hero, service, email_labels, initialContentProps } from "@/consts";
+import { initialContentProps } from "@/consts";
+import { siteTextDefaults, SiteTextValues, Locale } from "@/content/siteText";
+import { useLocale } from "@/hooks/useLocale";
+import { defaultSectionFlags, SectionFlags, SectionKey } from "@/content/sections";
+
+// Internal tools use the same card shape as projects.
+export type InternalToolsFullType = { [locale: string]: ProjectType[] }
 interface ContentProviderProps {
   children: React.ReactNode,
   locale: string
@@ -30,10 +34,22 @@ interface ContentProps {
   experience: ExperienceFullType,
   project: ProjectFullType,
   techStack: TechStackFullType,
-  hero: heroFullType,
-  service:ServiceFullType,
-  email_labels: EmailLabelsFullType,
-  isLoading: boolean
+  service: ServiceFullType,
+  internalTools: InternalToolsFullType,
+  sections: SectionFlags,
+  text: SiteTextValues,
+  isLoading: boolean,
+  hasError: boolean
+}
+
+// Fetch an API list endpoint; reject on HTTP errors or a non-array body so
+// callers never run array methods on an `{ error }` response.
+const fetchList = async <T,>(url: string): Promise<T[]> => {
+  const res = await fetch(url)
+  if (!res.ok) throw new Error(`${url} responded ${res.status}`)
+  const data = await res.json()
+  if (!Array.isArray(data)) throw new Error(`${url} returned unexpected data`)
+  return data
 }
 
 export const ContentContext = createContext<ContentProps>(initialContentProps);
@@ -43,41 +59,54 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [experience, experienceDispatch] = useReducer(experienceReducer, {})
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
+  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType, internalTools: InternalToolsFullType, sections: SectionFlags } | null>(null)
   const [isLoading, setLoading] = useState<boolean>(true)
+  const [hasError, setError] = useState<boolean>(false)
+  const onError = (error: unknown) => {
+    console.error('Failed to load content:', error)
+    setError(true)
+  }
 
   useEffect(() => {
     if (Object.keys(bio).length != 0
       && Object.keys(experience).length != 0
       && Object.keys(project).length != 0
-      && Object.keys(techStack).length != 0) {
+      && Object.keys(techStack).length != 0
+      && site) {
         setTimeout(() => setLoading(false), 350)
       }
-  }, [bio, experience, project, techStack])
+  }, [bio, experience, project, techStack, site])
+
+  useEffect(() => {
+    fetch('/api/site')
+      .then((res) => res.ok ? res.json() : Promise.reject(new Error(`/api/site responded ${res.status}`)))
+      .then(setSite)
+      .catch(onError)
+  }, [locale])
   
   useEffect(() => {
-    fetch('/api/bio')
-      .then((res) => res.json())
-      .then((data: BioType[]) => {
+    fetchList<BioType>('/api/bio')
+      .then((data) => {
         const en = data.find((d) => d.locale === 'en')
         const jp = data.find((d) => d.locale === 'jp')
         bioDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
+      .catch(onError)
   }, [locale])
 
   useEffect(() => {
-    fetch('/api/project')
-      .then((res) => res.json())
-      .then((data: ProjectType[]) => {
+    fetchList<ProjectType>('/api/project')
+      .then((data) => {
         const en = data.filter((d) => d.locale === 'en')
         const jp = data.filter((d) => d.locale === 'jp')
         projectDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
+      .catch(onError)
   }, [locale])
 
   useEffect(() => {
-    fetch('/api/techstack')
-      .then((res) => res.json())
-      .then((data: TechStackType[]) => {
+    fetchList<TechStackType>('/api/techstack')
+      .then((data) => {
         const frontend = {
           en: data.filter((d) => d.label === 'Frontend' && d.locale === 'en'),
           jp: data.filter((d) => d.label === 'Frontend' && d.locale === 'jp')
@@ -103,17 +132,18 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
           }
         })
       })
+      .catch(onError)
   }, [locale])
 
   useEffect(() => {
-    fetch('/api/experience')
-      .then((res) => res.json())
-      .then((data:ExperienceType[]) => {
-        const sortedData = data.sort((a, b) => Number(b.seq) - Number(a.seq))
-        const en = sortedData.filter((d) => d.locale === 'en')
-        const jp = sortedData.filter((d) => d.locale === 'jp')
+    fetchList<ExperienceType>('/api/experience')
+      .then((data) => {
+        // already in display order
+        const en = data.filter((d) => d.locale === 'en')
+        const jp = data.filter((d) => d.locale === 'jp')
         experienceDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
+      .catch(onError)
   }, [locale])
 
   
@@ -123,10 +153,12 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     ...experience,
     ...project,
     ...techStack,
-    hero,
-    service,
-    email_labels,
-    isLoading
+    service: site?.services || { en: [], jp: [] },
+    internalTools: site?.internalTools || { en: [], jp: [] },
+    sections: { ...defaultSectionFlags, ...site?.sections },
+    text: site?.text || siteTextDefaults,
+    isLoading,
+    hasError
   }
 
   return (
@@ -137,3 +169,17 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
 }
 
 export const useContent = () => useContext(ContentContext)
+
+// Returns a lookup for editable site text (keys in src/content/siteText.ts) in
+// the current locale.
+export const useText = () => {
+  const { text } = useContext(ContentContext)
+  const { locale } = useLocale()
+  return (key: string) => text[key]?.[locale as Locale] ?? siteTextDefaults[key]?.[locale as Locale] ?? ''
+}
+
+// Whether a section is switched on in the dashboard (Sections page).
+export const useSectionVisible = () => {
+  const { sections } = useContext(ContentContext)
+  return (key: SectionKey) => sections?.[key] !== false
+}
