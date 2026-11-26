@@ -3,6 +3,9 @@ import { ProjectType,ProjectModalType } from "@/const"
 import Modal from "../Modal"
 import Window from "../Window"
 
+// Clickable cards lift a little and their shadow deepens on hover / keyboard focus.
+const hoverClass = "transition-[transform,box-shadow] duration-150 ease-out group-hover:shadow-[6px_6px_0_0_var(--fg)] group-focus-visible:shadow-[6px_6px_0_0_var(--fg)] motion-safe:group-hover:-translate-x-0.5 motion-safe:group-hover:-translate-y-0.5 motion-safe:group-focus-visible:-translate-x-0.5 motion-safe:group-focus-visible:-translate-y-0.5"
+
 // Cards for Projects and Internal Tools. A card opens its detail popup if it
 // has one, otherwise its link; with neither it is just a box.
 const Project = ({ data }: {data: ProjectType[]}) => {
@@ -28,12 +31,12 @@ const Project = ({ data }: {data: ProjectType[]}) => {
         {...(clickable ? {
           role: "button",
           tabIndex: 0,
-          className: "cursor-pointer",
+          className: "group cursor-pointer outline-none",
           onClick: () => onClickCard(prj),
           onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClickCard(prj) } },
         } : {})}
       >
-        <Window title={prj.title} className="h-full">
+        <Window title={prj.title} className={clickable ? `h-full ${hoverClass}` : "h-full"}>
           {prj.subtitle ? (
             <p className="mb-1 font-semibold leading-snug text-fg">{ prj.subtitle }</p>
           ) : null}
