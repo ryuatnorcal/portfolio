@@ -3,15 +3,16 @@
 @tailwind utilities;
 
 :root {
-  --bg: oklch(98% 0.004 255);
-  --surface: oklch(95.5% 0.005 255);
-  --surface-2: oklch(92% 0.006 255);
-  --border: oklch(88% 0.006 255);
-  --fg: oklch(19% 0.012 255);
-  --fg-muted: oklch(48% 0.012 255);
-  --accent: oklch(62% 0.19 258);
-  --accent-fg: oklch(99% 0.004 255);
-  --accent-soft: oklch(94% 0.03 258);
+  /* Windows 95, in black and white */
+  --bg: #ffffff;
+  --surface: #ffffff;
+  --surface-2: #f2f2f2;
+  --border: #000000;
+  --fg: #000000;
+  --fg-muted: #3a3a3a;
+  --accent: #000000;
+  --accent-fg: #ffffff;
+  --accent-soft: #e6e6e6;
 
   --text-xs: 0.75rem;
   --text-sm: 0.875rem;
@@ -51,14 +52,15 @@
   --content-width: 46rem;
   --page-max-width: 74rem;
 
-  --radius-sm: 6px;
-  --radius-md: 10px;
-  --radius-lg: 18px;
+  --radius-sm: 0px;
+  --radius-md: 0px;
+  --radius-lg: 0px;
   --radius-pill: 999px;
 
-  --shadow-sm: 0 1px 2px oklch(19% 0.012 255 / 0.06);
-  --shadow-md: 0 8px 24px oklch(19% 0.012 255 / 0.08);
-  --shadow-lg: 0 24px 48px oklch(19% 0.012 255 / 0.12);
+  --shadow-sm: 2px 2px 0 0 var(--fg);
+  --shadow-md: 3px 3px 0 0 var(--fg);
+  --shadow-lg: 4px 4px 0 0 var(--fg);
+  --shadow-win: 4px 4px 0 0 var(--fg);
 
   --border-width: 1px;
   --ease-standard: cubic-bezier(0.2, 0.7, 0.2, 1);
@@ -67,15 +69,15 @@
 }
 
 [data-theme="dark"] {
-  --bg: oklch(17% 0.012 255);
-  --surface: oklch(22% 0.013 255);
-  --surface-2: oklch(27% 0.014 255);
-  --border: oklch(32% 0.014 255);
-  --fg: oklch(96% 0.004 255);
-  --fg-muted: oklch(68% 0.012 255);
-  --accent: oklch(70% 0.17 258);
-  --accent-fg: oklch(14% 0.01 255);
-  --accent-soft: oklch(30% 0.06 258);
+  --bg: #000000;
+  --surface: #000000;
+  --surface-2: #141414;
+  --border: #ffffff;
+  --fg: #ffffff;
+  --fg-muted: #c8c8c8;
+  --accent: #ffffff;
+  --accent-fg: #000000;
+  --accent-soft: #262626;
 }
 
 html,
@@ -97,6 +99,62 @@ a:hover {
   text-decoration: underline;
 }
 
+/* Windows 95-style push button: hard border and shadow, pressed on click. */
+.win-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: 3px 3px 0 0 var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.win-btn:hover {
+  background: var(--fg);
+  color: var(--bg);
+  text-decoration: none;
+}
+
+.win-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+/* Text fields: flat, square, black outline. */
+.win-input {
+  width: 100%;
+  appearance: none;
+  border: 2px solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  padding: 0.5rem 0.75rem;
+  line-height: 1.25;
+}
+
+.win-input:focus {
+  outline: 2px dashed var(--fg);
+  outline-offset: 2px;
+}
+
+/* Loading indicator: dots step on and off (no easing, like an old OS). */
+.loading-dot {
+  animation: loading-dot 1.2s steps(1, end) infinite;
+}
+
+@keyframes loading-dot {
+  0%, 100% { opacity: 0.15; }
+  33% { opacity: 1; }
+  66% { opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-dot { animation: none; opacity: 1; }
+}
+
 .icon-chip {
   width: 44px;
   height: 44px;
@@ -107,7 +165,48 @@ a:hover {
   background: transparent;
 }
 
-[data-theme="dark"] .icon-chip {
+[data-theme="dark"] /* Windows 95-style push button: hard border and shadow, pressed on click. */
+.win-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  box-shadow: 3px 3px 0 0 var(--fg);
+  font-weight: 600;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+.win-btn:hover {
+  background: var(--fg);
+  color: var(--bg);
+  text-decoration: none;
+}
+
+.win-btn:active {
+  transform: translate(3px, 3px);
+  box-shadow: none;
+}
+
+/* Text fields: flat, square, black outline. */
+.win-input {
+  width: 100%;
+  appearance: none;
+  border: 2px solid var(--fg);
+  background: var(--bg);
+  color: var(--fg);
+  padding: 0.5rem 0.75rem;
+  line-height: 1.25;
+}
+
+.win-input:focus {
+  outline: 2px dashed var(--fg);
+  outline-offset: 2px;
+}
+
+.icon-chip {
   background: #fff;
 }
 

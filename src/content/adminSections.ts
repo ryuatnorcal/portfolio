@@ -3,11 +3,13 @@
 // component importing a value from there gets a client reference, not the
 // array.
 export const adminSections = [
+  { href: '/admin/sections', label: 'Sections' },
   { href: '/admin/text', label: 'Text & labels' },
   { href: '/admin/bio', label: 'Bio' },
   { href: '/admin/services', label: 'Services' },
   { href: '/admin/experience', label: 'Experience' },
   { href: '/admin/projects', label: 'Projects' },
+  { href: '/admin/internal-tools', label: 'Internal tools' },
   { href: '/admin/tech', label: 'Tech stack' },
   { href: '/admin/banner', label: 'Banner images' },
 ]

@@ -2,24 +2,30 @@ import Link from "next/link";
 import { prisma } from "@/utils/prisma";
 import { guardAdminPage } from "@/utils/admin";
 import { adminSections } from "@/content/adminSections";
+import { getSectionFlags } from "@/content/load";
 import { PageHeader } from "@/components/Admin/ui";
 
 export default async function AdminHome() {
   await guardAdminPage()
-  const [experience, project, techStack, service, bio, text] = await Promise.all([
+  const [experience, project, techStack, service, internalTool, bio, text, flags] = await Promise.all([
     prisma.experience.count(),
     prisma.project.count(),
     prisma.techStack.count(),
     prisma.service.count(),
+    prisma.internalTool.count(),
     prisma.bio.count(),
     prisma.siteText.count(),
+    getSectionFlags(),
   ])
+  const hidden = Object.values(flags).filter((visible) => !visible).length
   const counts: Record<string, string> = {
+    '/admin/sections': hidden ? `${hidden} hidden` : 'All shown',
     '/admin/text': `${text} saved values`,
     '/admin/bio': `${bio} of 2 languages`,
     '/admin/services': `${service} entries`,
     '/admin/experience': `${experience} entries`,
     '/admin/projects': `${project} entries`,
+    '/admin/internal-tools': `${internalTool} entries`,
     '/admin/tech': `${techStack} entries`,
     '/admin/banner': 'Hero photos in R2',
   }

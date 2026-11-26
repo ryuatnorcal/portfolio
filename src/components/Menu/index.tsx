@@ -61,8 +61,8 @@ const Menu = () => {
 
   // Colours for a nav item; `active` is the current page.
   const itemColors = (active = false) => {
-    if (inverted) return active ? 'text-black bg-white' : 'text-white bg-black hover:text-black hover:bg-white'
-    return active ? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'
+    if (inverted) return `border-2 border-white ${active ? 'text-black bg-white' : 'text-white bg-black hover:text-black hover:bg-white'}`
+    return `border-2 border-black ${active ? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'}`
   }
   const surface = inverted ? 'bg-black' : 'bg-white'
   // logo and icons are black artwork: invert them on the dark nav
@@ -70,16 +70,16 @@ const Menu = () => {
 
   return (
     <div className='w-screen overflow-hidden'>
-      <nav ref={navRef} className={`flex w-screen overflow-x-hidden justify-between items-center pt-3 pb-3 px-10 fixed w-full z-50 transition-colors duration-300 ${surface}`}>
+      <nav ref={navRef} className={`flex w-screen overflow-x-hidden justify-between items-center pt-3 pb-3 px-10 fixed w-full z-50 border-b-2 transition-colors duration-300 ${surface} ${inverted ? 'border-white' : 'border-black'}`}>
         <div className="flex items-center">
             <Image src={logo} alt="logo" className={iconFilter} />
         </div>
         {/* desktop menu */}
         <div className="hidden lg:flex items-center">
-          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 mr-4 py-2 rounded-md ${itemColors(pathname === '/')} transition-colors duration-300`}>Home</Link>
-          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block mr-4 px-4 rounded-md py-2 ${itemColors(pathname === '/about')} transition-colors duration-300`}>About</Link>
-          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block mr-4 rounded-md px-4 py-2 ${itemColors(pathname === '/contact')} transition-colors duration-300`}>Contact</Link>
-          <button className={`inline-block px-4 py-2 rounded-md ${itemColors()} transition-colors duration-300`} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
+          <Link href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 mr-4 py-2 ${itemColors(pathname === '/')} transition-colors duration-300`}>Home</Link>
+          <Link href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block mr-4 px-4 py-2 ${itemColors(pathname === '/about')} transition-colors duration-300`}>About</Link>
+          <Link href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block mr-4 px-4 py-2 ${itemColors(pathname === '/contact')} transition-colors duration-300`}>Contact</Link>
+          <button className={`inline-block px-4 py-2 ${itemColors()} transition-colors duration-300`} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
         </div>
         <div onClick={handleMenu} className="lg:hidden">
           {open ?

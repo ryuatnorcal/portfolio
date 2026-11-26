@@ -14,7 +14,7 @@ export type CollectionField = {
   hint?: string,
 }
 
-export type CollectionName = 'experience' | 'project' | 'techStack' | 'service'
+export type CollectionName = 'experience' | 'project' | 'techStack' | 'service' | 'internalTool'
 
 export type CollectionConfig = {
   title: string,
@@ -25,6 +25,21 @@ export type CollectionConfig = {
   // items are ordered within groups of this field (e.g. tech category)
   groupBy?: string,
 }
+
+// Fields of a project card and its optional detail popup. Used by Projects
+// and Internal Tools, which are edited and shown the same way.
+const projectFields = ({ requireYearAndLink }: { requireYearAndLink: boolean }): CollectionField[] => [
+  { name: 'title', label: 'Title', type: 'text', required: true },
+  { name: 'year', label: 'Year', type: 'text', required: requireYearAndLink },
+  { name: 'subtitle', label: 'Subtitle', type: 'text', hint: 'Optional short line shown under the title' },
+  { name: 'link', label: 'Link', type: 'url', required: requireYearAndLink, hint: requireYearAndLink ? undefined : 'Optional: opened when the card is clicked and there is no popup' },
+  { name: 'description', label: 'Description', type: 'textarea', required: true },
+  { name: 'modalTitle', label: 'Popup title', type: 'text', hint: 'Leave empty for no detail popup' },
+  { name: 'modalYear', label: 'Popup year', type: 'text' },
+  { name: 'modalImg', label: 'Popup image or video', type: 'text', hint: 'Image or video URL (e.g. Cloudflare Stream or a .mp4 link). Older entries can still use a screenshot file name.' },
+  { name: 'modalUrl', label: 'Popup URL', type: 'url' },
+  { name: 'modalDescription', label: 'Popup description', type: 'textarea' },
+]
 
 export const collections: Record<CollectionName, CollectionConfig> = {
   experience: {
@@ -42,17 +57,7 @@ export const collections: Record<CollectionName, CollectionConfig> = {
     title: 'Projects',
     itemLabel: 'project',
     summary: 'title',
-    fields: [
-      { name: 'title', label: 'Title', type: 'text', required: true },
-      { name: 'year', label: 'Year', type: 'text', required: true },
-      { name: 'link', label: 'Link', type: 'url', required: true },
-      { name: 'description', label: 'Description', type: 'textarea', required: true },
-      { name: 'modalTitle', label: 'Popup title', type: 'text', hint: 'Leave empty for no detail popup' },
-      { name: 'modalYear', label: 'Popup year', type: 'text' },
-      { name: 'modalImg', label: 'Popup image', type: 'text', hint: 'File name of the screenshot' },
-      { name: 'modalUrl', label: 'Popup URL', type: 'url' },
-      { name: 'modalDescription', label: 'Popup description', type: 'textarea' },
-    ],
+    fields: projectFields({ requireYearAndLink: true }),
   },
   techStack: {
     title: 'Tech stack',
@@ -72,6 +77,13 @@ export const collections: Record<CollectionName, CollectionConfig> = {
     fields: [
       { name: 'name', label: 'Service', type: 'text', required: true },
     ],
+  },
+  internalTool: {
+    title: 'Internal tools',
+    itemLabel: 'tool',
+    summary: 'title',
+    // same form as projects; tools often have no public link or year
+    fields: projectFields({ requireYearAndLink: false }),
   },
 }
 

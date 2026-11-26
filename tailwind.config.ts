@@ -28,16 +28,20 @@ const config: Config = {
         body: ["var(--font-body)", "ui-sans-serif", "system-ui", "sans-serif"],
         mono: ["var(--font-mono)", "ui-monospace", "SFMono-Regular", "monospace"],
       },
+      // Square corners everywhere (Windows 95); rounded-full/pill stay round.
       borderRadius: {
-        sm: "6px",
-        md: "10px",
-        lg: "18px",
+        DEFAULT: "0",
+        sm: "0",
+        md: "0",
+        lg: "0",
+        xl: "0",
         pill: "999px",
       },
       boxShadow: {
         sm: "var(--shadow-sm)",
         md: "var(--shadow-md)",
         lg: "var(--shadow-lg)",
+        win: "var(--shadow-win)",
       },
       letterSpacing: {
         tight: "-0.01em",

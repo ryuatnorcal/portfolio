@@ -44,10 +44,14 @@ model Project {
   description String
   link        String
   position    Int    @default(0)
+  // Optional short line shown under the title on the card.
+  subtitle    String?
 
   // Optional detail popup; shown when modalTitle is set.
   modalTitle       String?
   modalYear        String?
+  // Image or video: a full URL (image, video file or Cloudflare Stream), or
+  // a file name in public/screenshot for older entries.
   modalImg         String?
   modalDescription String?
   modalUrl         String?
@@ -76,6 +80,39 @@ model Service {
 
   @@index([locale, position])
   @@map("service")
+}
+
+// "Internal Tools" on the About page: the same fields as Project, but year
+// and link are optional (tools often have no public link).
+model InternalTool {
+  id          Int     @id @default(autoincrement())
+  locale      String
+  title       String
+  year        String?
+  subtitle    String?
+  description String?
+  link        String?
+  position    Int     @default(0)
+
+  // Optional detail popup; shown when modalTitle is set. modalImg is an
+  // image or video URL, as for Project.
+  modalTitle       String?
+  modalYear        String?
+  modalImg         String?
+  modalDescription String?
+  modalUrl         String?
+
+  @@index([locale, position])
+  @@map("internal_tool")
+}
+
+// Show/hide switch for a site section, keyed as in src/content/sections.ts.
+// Sections without a row are shown.
+model SectionVisibility {
+  section String  @id
+  visible Boolean @default(true)
+
+  @@map("section_visibility")
 }
 
 // Short pieces of page copy and labels, keyed as in src/content/siteText.ts.

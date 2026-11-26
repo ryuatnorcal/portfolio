@@ -11,6 +11,7 @@ const lists: Record<string, { name: CollectionName, description: string }> = {
   experience: { name: 'experience', description: 'Work history on the About page, top to bottom.' },
   projects: { name: 'project', description: 'Projects on the About page.' },
   tech: { name: 'techStack', description: 'Technologies on the home page, by category.' },
+  'internal-tools': { name: 'internalTool', description: 'The internal tools list on the About page. Its title and description are under Text & labels.' },
 }
 
 const load = (name: CollectionName, locale: string) => {
@@ -20,6 +21,7 @@ const load = (name: CollectionName, locale: string) => {
     case 'project': return prisma.project.findMany(args)
     case 'techStack': return prisma.techStack.findMany(args)
     case 'service': return prisma.service.findMany(args)
+    case 'internalTool': return prisma.internalTool.findMany(args)
   }
 }
 

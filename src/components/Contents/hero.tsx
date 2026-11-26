@@ -13,7 +13,7 @@ export const Hero = ({ }: HeroProps) => {
   const catchphrase = t('hero.catchphrase')
   const location = t('hero.location')
   return (
-    <div className="w-10/12 md:w-8/12 xl:w-6/12 py-[var(--section-padding-y)]">
+    <div className="w-11/12 md:w-8/12 xl:w-6/12 py-[var(--section-padding-y)]">
       <Image
         src={me}
         alt="Ryu"

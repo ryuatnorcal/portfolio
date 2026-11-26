@@ -1,12 +1,17 @@
 'use server'
 import { NextResponse, NextRequest  } from 'next/server'
 import nodemailer from 'nodemailer'
-// import { MailerSend, EmailParams, Sender, Recipient } from 'mailersend'
 import ApiError from '@/utils/error'
 
 const regx = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/
+
+// SMTP settings (Gmail: SMTP_HOST=smtp.gmail.com, SMTP_PORT=465, SMTP_USER=the
+// address, SMTP_PASS=an app password). EMAIL_DRY_RUN=true skips sending, for
+// local testing without credentials.
+const SMTP_KEYS = ['SMTP_HOST', 'SMTP_PORT', 'SMTP_USER', 'SMTP_PASS', 'EMAIL_FROM', 'EMAIL_TO'] as const
+
 export const POST = async (
-  req: NextRequest 
+  req: NextRequest
 ) => {
   try {
     const formData = await req.formData()
@@ -28,28 +33,27 @@ export const POST = async (
       return ApiError('Message is required')
     }
 
-    // If SMTP is not configured (common in local/e2e), short-circuit with success
-    const hasSmtpConfig = Boolean(
-      process.env.SMTP_HOST &&
-      process.env.SMTP_PORT &&
-      process.env.SMTP_USER &&
-      process.env.SMTP_PASS &&
-      process.env.EMAIL_FROM &&
-      process.env.EMAIL_TO
-    )
-
-    if (!hasSmtpConfig) {
+    if (process.env.EMAIL_DRY_RUN === 'true') {
       return NextResponse.json({
         status: 'success',
-        data: { message: 'Email sent (SMTP not configured: skipped send)' },
+        data: { message: 'Email sent (EMAIL_DRY_RUN: skipped send)' },
       })
     }
 
-    // SMTP with nodemailer 
+    // Without SMTP settings nothing can be sent: say so instead of reporting
+    // success for a message that went nowhere.
+    const missing = SMTP_KEYS.filter((key) => !process.env[key])
+    if (missing.length) {
+      console.error(`Contact form: email not sent, missing ${missing.join(', ')}`)
+      return ApiError('Sorry, the message could not be sent. Please try again later.')
+    }
+
+    const port = Number(process.env.SMTP_PORT)
     const transporter = nodemailer.createTransport({
       host: process.env.SMTP_HOST,
-      port: Number(process.env.SMTP_PORT),
-      secure: true,
+      port,
+      // 465 is TLS from the start; other ports (587) upgrade with STARTTLS
+      secure: port === 465,
       auth: {
         user: process.env.SMTP_USER,
         pass: process.env.SMTP_PASS
@@ -59,6 +63,8 @@ export const POST = async (
     const mailOptions = {
       from: process.env.EMAIL_FROM,
       to: process.env.EMAIL_TO,
+      // replying to the notification goes to the visitor
+      replyTo: String(email),
       subject: `Portfolio has received a new message from ${name}`,
       text: `
         Portfolio has received a new message from ${name}\n
@@ -77,11 +83,12 @@ export const POST = async (
         message: 'Email sent'
       }
     })
-    
-  } catch (error: any) {
+
+  } catch (error) {
+    console.error('Contact form: sending failed:', error)
     return NextResponse.json({
       status: 'error',
-      data: { message: 'Failed to send email' }
+      data: { message: 'Sorry, the message could not be sent. Please try again later.' }
     })
   }
 }

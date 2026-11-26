@@ -1,6 +1,10 @@
 import { useState } from "react"
 import { ProjectType,ProjectModalType } from "@/const"
 import Modal from "../Modal"
+import Window from "../Window"
+
+// Cards for Projects and Internal Tools. A card opens its detail popup if it
+// has one, otherwise its link; with neither it is just a box.
 const Project = ({ data }: {data: ProjectType[]}) => {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [selectedData, setSelection] = useState<ProjectModalType | {}>({})
@@ -17,19 +21,29 @@ const Project = ({ data }: {data: ProjectType[]}) => {
     }
   }
   const renderExperience = (data: ProjectType[]) => data.map((prj) => {
+    const clickable = !!prj.modal || !!prj.link
     return (
       <div
         key={prj._id}
-        className="cursor-pointer rounded-lg border border-border bg-surface p-6"
-        onClick={()=>onClickCard(prj)}
+        {...(clickable ? {
+          role: "button",
+          tabIndex: 0,
+          className: "cursor-pointer",
+          onClick: () => onClickCard(prj),
+          onKeyDown: (e: React.KeyboardEvent) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClickCard(prj) } },
+        } : {})}
       >
-        <div className="mb-2.5 flex items-baseline justify-between gap-3">
-          <span className="font-display text-xl font-semibold text-fg">{ prj.title }</span>
-          <span className="whitespace-nowrap font-mono text-[11px] text-fg-muted">{ prj.year }</span>
-        </div>
-        <p className="m-0 leading-relaxed text-fg-muted">
-          { prj.description }
-        </p>
+        <Window title={prj.title} className="h-full">
+          {prj.subtitle ? (
+            <p className="mb-1 font-semibold leading-snug text-fg">{ prj.subtitle }</p>
+          ) : null}
+          {prj.year ? (
+            <span className="mb-2.5 block font-mono text-[11px] text-fg-muted">{ prj.year }</span>
+          ) : null}
+          <p className="m-0 leading-relaxed text-fg-muted">
+            { prj.description }
+          </p>
+        </Window>
       </div>
     )
   }) || []
