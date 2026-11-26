@@ -124,9 +124,9 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   useEffect(() => {
     fetchList<ExperienceType>('/api/experience')
       .then((data) => {
-        const sortedData = data.sort((a, b) => Number(b.seq) - Number(a.seq))
-        const en = sortedData.filter((d) => d.locale === 'en')
-        const jp = sortedData.filter((d) => d.locale === 'jp')
+        // already in display order
+        const en = data.filter((d) => d.locale === 'en')
+        const jp = data.filter((d) => d.locale === 'jp')
         experienceDispatch({ type: 'SET_CONTENT', content: { en, jp } })
       })
       .catch(onError)
