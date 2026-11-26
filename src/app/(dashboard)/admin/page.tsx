@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { prisma } from "@/utils/prisma";
 import { guardAdminPage } from "@/utils/admin";
-import { adminSections } from "@/components/Admin/AdminNav";
+import { adminSections } from "@/content/adminSections";
 import { PageHeader } from "@/components/Admin/ui";
 
 export default async function AdminHome() {

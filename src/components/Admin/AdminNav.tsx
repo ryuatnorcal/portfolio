@@ -1,16 +1,7 @@
 'use client'
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-
-export const adminSections = [
-  { href: '/admin/text', label: 'Text & labels' },
-  { href: '/admin/bio', label: 'Bio' },
-  { href: '/admin/services', label: 'Services' },
-  { href: '/admin/experience', label: 'Experience' },
-  { href: '/admin/projects', label: 'Projects' },
-  { href: '/admin/tech', label: 'Tech stack' },
-  { href: '/admin/banner', label: 'Banner images' },
-]
+import { adminSections } from "@/content/adminSections"
 
 const AdminNav = () => {
   const pathname = usePathname()
