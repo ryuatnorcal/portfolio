@@ -1,3 +1,4 @@
+import { defaultSectionFlags } from './content/sections'
 import {
   techStackLabelType,
   sectionLabelsType,
@@ -296,6 +297,7 @@ export const initialContentProps = {
     en: [],
     jp: []
   },
+  sections: defaultSectionFlags,
   // filled from siteTextDefaults by ContentProvider
   text: {}
 }

@@ -4,6 +4,7 @@ import { prisma } from "@/utils/prisma"
 import { requireAdmin } from "@/utils/admin"
 import { collections, CollectionName, isCollectionName, MAX_FIELD_LENGTH } from "@/content/collections"
 import { LOCALES, Locale, siteTextFields } from "@/content/siteText"
+import { isSectionKey } from "@/content/sections"
 
 export type ActionResult = { ok: true } | { ok: false, error: string }
 
@@ -154,6 +155,22 @@ export const saveSiteText = async (entries: { key: string, locale: string, value
       where: { key_locale: { key, locale } },
       create: { key, locale, value },
       update: { value },
+    })
+  ))
+})
+
+// Saves the show/hide switch of every section on the Sections page.
+export const saveSectionFlags = async (flags: Record<string, boolean>): Promise<ActionResult> => run(async () => {
+  const entries = Object.entries(flags)
+  entries.forEach(([section, visible]) => {
+    if (!isSectionKey(section)) throw new InputError('Unknown section')
+    if (typeof visible !== 'boolean') throw new InputError('Invalid value')
+  })
+  await prisma.$transaction(entries.map(([section, visible]) =>
+    prisma.sectionVisibility.upsert({
+      where: { section },
+      create: { section, visible },
+      update: { visible },
     })
   ))
 })

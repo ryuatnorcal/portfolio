@@ -106,6 +106,15 @@ model InternalTool {
   @@map("internal_tool")
 }
 
+// Show/hide switch for a site section, keyed as in src/content/sections.ts.
+// Sections without a row are shown.
+model SectionVisibility {
+  section String  @id
+  visible Boolean @default(true)
+
+  @@map("section_visibility")
+}
+
 // Short pieces of page copy and labels, keyed as in src/content/siteText.ts.
 model SiteText {
   key    String

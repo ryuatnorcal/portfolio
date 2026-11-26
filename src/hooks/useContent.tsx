@@ -21,6 +21,7 @@ import {
 import { initialContentProps } from "@/consts";
 import { siteTextDefaults, SiteTextValues, Locale } from "@/content/siteText";
 import { useLocale } from "@/hooks/useLocale";
+import { defaultSectionFlags, SectionFlags, SectionKey } from "@/content/sections";
 
 // Internal tools use the same card shape as projects.
 export type InternalToolsFullType = { [locale: string]: ProjectType[] }
@@ -35,6 +36,7 @@ interface ContentProps {
   techStack: TechStackFullType,
   service: ServiceFullType,
   internalTools: InternalToolsFullType,
+  sections: SectionFlags,
   text: SiteTextValues,
   isLoading: boolean,
   hasError: boolean
@@ -57,7 +59,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [experience, experienceDispatch] = useReducer(experienceReducer, {})
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
-  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType, internalTools: InternalToolsFullType } | null>(null)
+  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType, internalTools: InternalToolsFullType, sections: SectionFlags } | null>(null)
   const [isLoading, setLoading] = useState<boolean>(true)
   const [hasError, setError] = useState<boolean>(false)
   const onError = (error: unknown) => {
@@ -153,6 +155,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     ...techStack,
     service: site?.services || { en: [], jp: [] },
     internalTools: site?.internalTools || { en: [], jp: [] },
+    sections: { ...defaultSectionFlags, ...site?.sections },
     text: site?.text || siteTextDefaults,
     isLoading,
     hasError
@@ -173,4 +176,10 @@ export const useText = () => {
   const { text } = useContext(ContentContext)
   const { locale } = useLocale()
   return (key: string) => text[key]?.[locale as Locale] ?? siteTextDefaults[key]?.[locale as Locale] ?? ''
+}
+
+// Whether a section is switched on in the dashboard (Sections page).
+export const useSectionVisible = () => {
+  const { sections } = useContext(ContentContext)
+  return (key: SectionKey) => sections?.[key] !== false
 }

@@ -1,6 +1,7 @@
 import { prisma } from "@/utils/prisma"
 import { siteTextDefaults, SiteTextValues, Locale } from "@/content/siteText"
 import type { ProjectType } from "@/const"
+import { defaultSectionFlags, isSectionKey, SectionFlags } from "@/content/sections"
 
 // Read-side helpers shared by the public API routes and the dashboard.
 
@@ -11,6 +12,14 @@ export const getSiteText = async (): Promise<SiteTextValues> => {
     if (values[key]) values[key][locale as Locale] = value
   })
   return values
+}
+
+// Which sections the site shows; sections without a saved switch are shown.
+export const getSectionFlags = async (): Promise<SectionFlags> => {
+  const rows = await prisma.sectionVisibility.findMany()
+  const flags = { ...defaultSectionFlags }
+  rows.forEach(({ section, visible }) => { if (isSectionKey(section)) flags[section] = visible })
+  return flags
 }
 
 // Name lists split by locale, in display order.
