@@ -1,9 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, JetBrains_Mono, Space_Grotesk } from "next/font/google";
 import "./globals.css";
-import Menu from "@/components/Menu";
-import Footer from "@/components/Footer";
-import { LocaleProvider } from "@/hooks/useLocale";
 import { ThemeProvider } from "@/hooks/useTheme";
 import { Analytics } from "@vercel/analytics/next"
 import { SpeedInsights } from "@vercel/speed-insights/next"
@@ -37,13 +34,7 @@ export default function RootLayout({
       <body className={`${inter.className} ${inter.variable} ${spaceGrotesk.variable} ${jetbrainsMono.variable}`}>
         <script dangerouslySetInnerHTML={{ __html: themeInitScript }} />
         <ThemeProvider>
-          <div className="w-full min-h-screen-footer bg-bg text-fg">
-            <LocaleProvider>
-              <Menu />
-              {children}
-            </LocaleProvider>
-          </div>
-          <Footer />
+          {children}
         </ThemeProvider>
         <Analytics />
         <SpeedInsights />

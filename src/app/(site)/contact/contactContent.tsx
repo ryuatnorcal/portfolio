@@ -1,11 +1,12 @@
 'use client'
 import Page from '@/components/Pages'
-import { useContent } from "@/hooks/useContent";
+import { useContent, useText } from "@/hooks/useContent";
 import Loading from '../loading'
-import {contactContent} from "../../consts";
 const ContactContent = ({locale}: {locale: string}) => {
   const { isLoading } = useContent()
-  const { catchphrase, msg } = contactContent[locale] || {}
+  const t = useText()
+  const catchphrase = t('contact.catchphrase')
+  const msg = t('contact.message')
   return !isLoading ? (
     <main className="flex flex-row items-center justify-center ">
       <Page sectionName="contact">

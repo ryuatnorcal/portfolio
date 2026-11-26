@@ -1,11 +1,10 @@
 'use client'
 import { useEffect, useState } from "react"
-import { useLocale } from "@/hooks/useLocale"
-import { sideNavLabels } from "@/consts"
+import { useText } from "@/hooks/useContent"
 
 export type SideNavSection = {
   id: string,      // element id to scroll to
-  label: string,   // key in sideNavLabels
+  label: string,   // section name; text key is sidenav.<label>
   dark?: boolean,  // section has a dark background: draw the nav in white
 }
 
@@ -19,7 +18,7 @@ const ACTIVE_LINE = 0.4
 // Fixed dot navigation on the right: one dot per section joined by a thin
 // line, with the current section's dot and label slightly bigger.
 const SideNav = ({ sections }: SideNavProps) => {
-  const { locale } = useLocale()
+  const t = useText()
   const [active, setActive] = useState<number>(0)
   const sectionsKey = sections.map(({ id }) => id).join('|')
 
@@ -77,7 +76,7 @@ const SideNav = ({ sections }: SideNavProps) => {
                   <span className={`block h-2 w-2 rounded-full bg-current transition-transform duration-300 ${isActive ? 'scale-150' : 'hover:scale-125'}`} />
                 </span>
                 <span className={`origin-left text-sm transition-all duration-300 ${isActive ? 'scale-110 font-semibold' : 'opacity-70 hover:opacity-100'}`}>
-                  {sideNavLabels[label]?.[locale] || label}
+                  {t(`sidenav.${label}`) || label}
                 </span>
               </button>
             </li>

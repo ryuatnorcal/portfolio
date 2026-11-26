@@ -277,36 +277,10 @@ export const initialContentProps = {
     }
     
   },
-  hero: {
-    en: {
-      catchphrase: '',
-      location: '',
-      subtitle: '',
-      title: '',
-    },
-    jp: {
-      catchphrase: '',
-      location: '',
-      subtitle: '',
-      title: '',
-    }
-  },
   service: {
-    en: [''],
-    jp: ['']
+    en: [],
+    jp: []
   },
-  email_labels: {
-    en: {
-      name:'',
-      email:'',
-      message:'',
-      submit:'',
-    },
-    jp: {
-      name:'',
-      email:'',
-      message:'',
-      submit:'',
-    }
-  }
+  // filled from siteTextDefaults by ContentProvider
+  text: {}
 }

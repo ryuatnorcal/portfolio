@@ -2,12 +2,16 @@
 import {useState, useEffect} from 'react'
 import { useLocale } from '@/hooks/useLocale';
 import { usePathname } from 'next/navigation'
-import { email_labels, emailSuccessMessage } from '../../consts'
+import { useText } from '@/hooks/useContent'
 
 const Email = () => {
   const { locale } = useLocale()
   const pathname = usePathname()
-  const { email, name, message, submit } = email_labels[locale] || {}
+  const t = useText()
+  const email = t('email.email')
+  const name = t('email.name')
+  const message = t('email.message')
+  const submit = t('email.submit')
   const [error, setError] = useState<string | null>(null);
   const [success, setSuccess] = useState<string | null>(null);
   const [emailValue, setEmailValue] = useState('')
@@ -31,7 +35,7 @@ const Email = () => {
     const response = await fetch(endpoint, options);
     const result = await response.json();
     if(result.status === 'success') {
-      setSuccess(emailSuccessMessage[locale])      
+      setSuccess(t('email.success'))      
       setEmailValue('')
       setNameValue('')
       setMessageValue('')

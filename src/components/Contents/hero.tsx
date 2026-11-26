@@ -1,16 +1,17 @@
 'use client'
 import Image from "next/image"
-import { useLocale } from "@/hooks/useLocale"
-import { useContent } from "@/hooks/useContent"
+import { useText } from "@/hooks/useContent"
 import me from "../../../public/icons/me.jpg"
 
 type HeroProps = {
   
 }
 export const Hero = ({ }: HeroProps) => {
-  const {locale} = useLocale()
-  const { hero } = useContent()
-  const { catchphrase, location, subtitle, title } = hero && hero[locale] || {}
+  const t = useText()
+  const title = t('hero.title')
+  const subtitle = t('hero.subtitle')
+  const catchphrase = t('hero.catchphrase')
+  const location = t('hero.location')
   return (
     <div className="w-10/12 md:w-8/12 xl:w-6/12 py-[var(--section-padding-y)]">
       <Image
