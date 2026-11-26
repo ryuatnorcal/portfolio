@@ -11,31 +11,41 @@
     "prebuild": "node scripts/generate-backgrounds.mjs",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "postinstall": "prisma generate",
+    "db:migrate": "prisma migrate deploy",
+    "db:seed": "prisma db seed"
   },
   "dependencies": {
     "@aws-sdk/client-s3": "^3.1178.0",
+    "@clerk/nextjs": "^6.39.9",
+    "@prisma/adapter-pg": "^7.10.1",
+    "@prisma/client": "^7.10.1",
     "@vercel/analytics": "^1.5.0",
     "@vercel/speed-insights": "^1.2.0",
     "mailersend": "^2.2.0",
-    "mongoose": "^8.3.5",
     "next": "14.2.35",
     "nodemailer": "^7.0.10",
+    "pg": "^8.23.1",
     "react": "^18",
     "react-dom": "^18",
     "sharp": "^0.35.3"
   },
   "devDependencies": {
     "@playwright/test": "^1.56.1",
-    "@types/mongoose": "^5.11.97",
     "@types/node": "^24.13.3",
     "@types/nodemailer": "^7.0.2",
+    "@types/pg": "^8.23.1",
     "@types/react": "^18",
     "@types/react-dom": "^18",
+    "dotenv": "^18.0.10",
     "eslint": "^8",
     "eslint-config-next": "^14.2.35",
+    "mongoose": "^8.24.11",
     "postcss": "^8",
+    "prisma": "^7.10.1",
     "tailwindcss": "^3.4.1",
+    "tsx": "^4.23.15",
     "typescript": "^5"
   }
 }
