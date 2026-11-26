@@ -4,6 +4,15 @@ import { Bio, Experience, Project, Hire } from '@/components/Contents'
 import { useContent } from "@/hooks/useContent";
 import Loading from '../loading'
 import Email from '@/components/Email'
+import SideNav, { SideNavSection } from '@/components/SideNav'
+
+const sections: SideNavSection[] = [
+  { id: 'about', label: 'about' },
+  { id: 'experience', label: 'experience' },
+  { id: 'project', label: 'project' },
+  { id: 'hire', label: 'hire' },
+]
+
 const AboutContent = () => {
   const { isLoading } = useContent()
   return !isLoading ? (
@@ -20,6 +29,7 @@ const AboutContent = () => {
       <Page sectionName='hire'>
         <Hire />
       </Page>
+      <SideNav sections={sections} />
     </main>
   ) : (
       <Loading />

@@ -84,6 +84,17 @@ export const sectionLabels:sectionLabelsType = {
   }
 }
 
+// Labels for the right-hand section navigation (SideNav)
+export const sideNavLabels: { [section: string]: { [locale: string]: string } } = {
+  home: { en: 'Home', jp: 'ホーム' },
+  service: { en: 'Services', jp: 'サービス' },
+  tech: { en: 'Tech Stack', jp: '技術スタック' },
+  about: { en: 'About', jp: '自己紹介' },
+  experience: { en: 'Experience', jp: '経験' },
+  project: { en: 'Projects', jp: 'プロジェクト' },
+  hire: { en: 'Hire Me', jp: '採用方法' },
+}
+
 export const techStackLabels: techStackLabelType = {
   en: {
     frontend: 'Frontend',
