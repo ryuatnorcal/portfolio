@@ -90,8 +90,8 @@ export const sectionLabels:sectionLabelsType = {
 
 // Default text under the Internal Tools heading; edited in the dashboard.
 export const internalToolsDescription = {
-  en: 'Tools I have built for teams to use in their day-to-day work.',
-  jp: 'チームの日々の業務のために開発したツールです。',
+  en: 'Self-hosted tools I built and use every day to run my finances, work and training.',
+  jp: '日々の家計・仕事・トレーニングの管理のために自作し、毎日使っているセルフホスト型のツールです。',
 }
 
 // Labels for the right-hand section navigation (SideNav)

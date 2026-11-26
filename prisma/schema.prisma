@@ -82,12 +82,13 @@ model Service {
   @@map("service")
 }
 
-// "Internal Tools" list on the About page; same shape as Service.
+// "Internal Tools" list on the About page: like Service, plus a description.
 model InternalTool {
-  id       Int    @id @default(autoincrement())
-  locale   String
-  name     String
-  position Int    @default(0)
+  id          Int     @id @default(autoincrement())
+  locale      String
+  name        String
+  description String?
+  position    Int     @default(0)
 
   @@index([locale, position])
   @@map("internal_tool")

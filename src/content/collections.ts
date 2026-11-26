@@ -80,6 +80,7 @@ export const collections: Record<CollectionName, CollectionConfig> = {
     summary: 'name',
     fields: [
       { name: 'name', label: 'Tool', type: 'text', required: true },
+      { name: 'description', label: 'Description', type: 'textarea', hint: 'Shown under the name' },
     ],
   },
 }

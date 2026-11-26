@@ -19,8 +19,15 @@ const byLocale = (rows: NameRow[]) => ({
   jp: rows.filter((r) => r.locale === 'jp').map((r) => r.name),
 })
 
-export const getInternalTools = async () =>
-  byLocale(await prisma.internalTool.findMany({ orderBy: [{ position: 'asc' }, { id: 'asc' }] }))
+export type InternalToolItem = { name: string, description: string }
+
+export const getInternalTools = async (): Promise<Record<Locale, InternalToolItem[]>> => {
+  const rows = await prisma.internalTool.findMany({ orderBy: [{ position: 'asc' }, { id: 'asc' }] })
+  const pick = (locale: Locale) => rows
+    .filter((r) => r.locale === locale)
+    .map(({ name, description }) => ({ name, description: description ?? '' }))
+  return { en: pick('en'), jp: pick('jp') }
+}
 
 export const getServices = async () =>
   byLocale(await prisma.service.findMany({ orderBy: [{ position: 'asc' }, { id: 'asc' }] }))

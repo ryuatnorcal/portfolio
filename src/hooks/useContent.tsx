@@ -21,6 +21,9 @@ import {
 import { initialContentProps } from "@/consts";
 import { siteTextDefaults, SiteTextValues, Locale } from "@/content/siteText";
 import { useLocale } from "@/hooks/useLocale";
+import type { InternalToolItem } from "@/content/load";
+
+export type InternalToolsFullType = { [locale: string]: InternalToolItem[] }
 interface ContentProviderProps {
   children: React.ReactNode,
   locale: string
@@ -31,7 +34,7 @@ interface ContentProps {
   project: ProjectFullType,
   techStack: TechStackFullType,
   service: ServiceFullType,
-  internalTools: ServiceFullType,
+  internalTools: InternalToolsFullType,
   text: SiteTextValues,
   isLoading: boolean,
   hasError: boolean
@@ -54,7 +57,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [experience, experienceDispatch] = useReducer(experienceReducer, {})
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
-  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType, internalTools: ServiceFullType } | null>(null)
+  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType, internalTools: InternalToolsFullType } | null>(null)
   const [isLoading, setLoading] = useState<boolean>(true)
   const [hasError, setError] = useState<boolean>(false)
   const onError = (error: unknown) => {
