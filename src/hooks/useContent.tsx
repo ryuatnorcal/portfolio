@@ -31,6 +31,7 @@ interface ContentProps {
   project: ProjectFullType,
   techStack: TechStackFullType,
   service: ServiceFullType,
+  internalTools: ServiceFullType,
   text: SiteTextValues,
   isLoading: boolean,
   hasError: boolean
@@ -53,7 +54,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
   const [experience, experienceDispatch] = useReducer(experienceReducer, {})
   const [project, projectDispatch] = useReducer(projectReducer, {})
   const [techStack, techStackDispatch] = useReducer(techStackReducer, {})
-  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType } | null>(null)
+  const [site, setSite] = useState<{ text: SiteTextValues, services: ServiceFullType, internalTools: ServiceFullType } | null>(null)
   const [isLoading, setLoading] = useState<boolean>(true)
   const [hasError, setError] = useState<boolean>(false)
   const onError = (error: unknown) => {
@@ -148,6 +149,7 @@ export const ContentProvider = ({ children, locale } : ContentProviderProps) => 
     ...project,
     ...techStack,
     service: site?.services || { en: [], jp: [] },
+    internalTools: site?.internalTools || { en: [], jp: [] },
     text: site?.text || siteTextDefaults,
     isLoading,
     hasError

@@ -44,10 +44,14 @@ model Project {
   description String
   link        String
   position    Int    @default(0)
+  // Optional short line shown under the title on the card.
+  subtitle    String?
 
   // Optional detail popup; shown when modalTitle is set.
   modalTitle       String?
   modalYear        String?
+  // Image or video: a full URL (image, video file or Cloudflare Stream), or
+  // a file name in public/screenshot for older entries.
   modalImg         String?
   modalDescription String?
   modalUrl         String?
@@ -76,6 +80,17 @@ model Service {
 
   @@index([locale, position])
   @@map("service")
+}
+
+// "Internal Tools" list on the About page; same shape as Service.
+model InternalTool {
+  id       Int    @id @default(autoincrement())
+  locale   String
+  name     String
+  position Int    @default(0)
+
+  @@index([locale, position])
+  @@map("internal_tool")
 }
 
 // Short pieces of page copy and labels, keyed as in src/content/siteText.ts.

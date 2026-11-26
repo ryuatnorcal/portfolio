@@ -1,6 +1,6 @@
 'use client'
 import Page from '@/components/Pages'
-import { Bio, Experience, Project, Hire } from '@/components/Contents'
+import { Bio, Experience, Project, InternalTools, Hire } from '@/components/Contents'
 import { useContent } from "@/hooks/useContent";
 import Loading from '../loading'
 import Email from '@/components/Email'
@@ -10,6 +10,7 @@ const sections: SideNavSection[] = [
   { id: 'about', label: 'about' },
   { id: 'experience', label: 'experience' },
   { id: 'project', label: 'project' },
+  { id: 'internal-tools', label: 'internalTools' },
   { id: 'hire', label: 'hire' },
 ]
 
@@ -25,6 +26,9 @@ const AboutContent = () => {
       </Page>
       <Page sectionName='project'>
         <Project />
+      </Page>
+      <Page sectionName='internal-tools'>
+        <InternalTools />
       </Page>
       <Page sectionName='hire'>
         <Hire />

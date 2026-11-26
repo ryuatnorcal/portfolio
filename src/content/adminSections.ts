@@ -8,6 +8,7 @@ export const adminSections = [
   { href: '/admin/services', label: 'Services' },
   { href: '/admin/experience', label: 'Experience' },
   { href: '/admin/projects', label: 'Projects' },
+  { href: '/admin/internal-tools', label: 'Internal tools' },
   { href: '/admin/tech', label: 'Tech stack' },
   { href: '/admin/banner', label: 'Banner images' },
 ]

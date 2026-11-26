@@ -11,7 +11,7 @@ export const Bio = () => {
   const {title, name, description} = bio && bio[locale] || {}
   
   return (
-    <div className="flex w-10/12 flex-col justify-start py-[var(--section-padding-y)] md:w-8/12">
+    <div className="flex w-11/12 flex-col justify-start py-[var(--section-padding-y)] md:w-8/12">
       <Window title="about_me.txt">
       <div className="grid grid-cols-1 items-center gap-6 xl:grid-cols-2">
         <div className="col-span-1 flex justify-center py-5">

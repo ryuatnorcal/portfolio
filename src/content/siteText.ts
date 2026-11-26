@@ -8,6 +8,7 @@ import {
   contactContent,
   email_labels,
   emailSuccessMessage,
+  internalToolsDescription,
 } from "@/consts"
 
 export type Locale = 'en' | 'jp'
@@ -49,6 +50,7 @@ export const siteTextGroups: SiteTextGroup[] = [
       { key: 'section.tech', label: 'Tech stack', defaults: both(sectionLabels.tech) },
       { key: 'section.experience', label: 'Experience', defaults: both(sectionLabels.experience) },
       { key: 'section.project', label: 'Projects', defaults: both(sectionLabels.project) },
+      { key: 'section.internalTools', label: 'Internal tools', defaults: both(sectionLabels.internalTools) },
       { key: 'section.hire', label: 'Hire me', defaults: both(sectionLabels.hire) },
     ],
   },
@@ -68,6 +70,12 @@ export const siteTextGroups: SiteTextGroup[] = [
       label: sideNavLabels[section].en,
       defaults: both(sideNavLabels[section]),
     })),
+  },
+  {
+    title: 'Internal tools',
+    fields: [
+      { key: 'internalTools.description', label: 'Description', multiline: true, defaults: both(internalToolsDescription) },
+    ],
   },
   {
     title: 'Hire me',

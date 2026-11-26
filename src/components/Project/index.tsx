@@ -28,6 +28,9 @@ const Project = ({ data }: {data: ProjectType[]}) => {
         onKeyDown={(e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); onClickCard(prj) } }}
       >
         <Window title={prj.title} className="h-full">
+          {prj.subtitle ? (
+            <p className="mb-1 font-semibold leading-snug text-fg">{ prj.subtitle }</p>
+          ) : null}
           <span className="mb-2.5 block font-mono text-[11px] text-fg-muted">{ prj.year }</span>
           <p className="m-0 leading-relaxed text-fg-muted">
             { prj.description }

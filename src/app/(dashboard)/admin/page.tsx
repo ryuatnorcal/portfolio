@@ -6,11 +6,12 @@ import { PageHeader } from "@/components/Admin/ui";
 
 export default async function AdminHome() {
   await guardAdminPage()
-  const [experience, project, techStack, service, bio, text] = await Promise.all([
+  const [experience, project, techStack, service, internalTool, bio, text] = await Promise.all([
     prisma.experience.count(),
     prisma.project.count(),
     prisma.techStack.count(),
     prisma.service.count(),
+    prisma.internalTool.count(),
     prisma.bio.count(),
     prisma.siteText.count(),
   ])
@@ -20,6 +21,7 @@ export default async function AdminHome() {
     '/admin/services': `${service} entries`,
     '/admin/experience': `${experience} entries`,
     '/admin/projects': `${project} entries`,
+    '/admin/internal-tools': `${internalTool} entries`,
     '/admin/tech': `${techStack} entries`,
     '/admin/banner': 'Hero photos in R2',
   }

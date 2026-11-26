@@ -1,6 +1,34 @@
 'use client'
-import Image from "next/image"
 import Window from "../Window"
+import { resolveMedia } from "@/utils/media"
+
+// The popup's image or video: any image URL, a video file URL, a Cloudflare
+// Stream link, or (older entries) a file name in public/screenshot.
+const ModalMedia = ({ value, title }) => {
+  const media = resolveMedia(value)
+  if (!media) return null
+  const frame = "mt-5 w-full border-2 border-fg"
+  if (media.kind === 'stream') {
+    return (
+      <div className={`${frame} relative aspect-video`}>
+        <iframe
+          src={media.src}
+          title={title}
+          className="absolute inset-0 h-full w-full"
+          allow="accelerometer; gyroscope; autoplay; encrypted-media; picture-in-picture; fullscreen"
+          allowFullScreen
+        />
+      </div>
+    )
+  }
+  if (media.kind === 'video') {
+    return <video src={media.src} className={frame} controls playsInline preload="metadata" />
+  }
+  // a plain <img>: the URL can be on any host, which next/image would need configured
+  // eslint-disable-next-line @next/next/no-img-element
+  return <img src={media.src} alt={title || "screenshot"} className={frame} loading="lazy" />
+}
+
 const Modal = ({ showModal, setIsModalOpen, data }) => {
   const {title, year, img, description, url} = data
   return showModal && (
@@ -12,9 +40,9 @@ const Modal = ({ showModal, setIsModalOpen, data }) => {
           onClose={() => setIsModalOpen(false)}
         >
           <p className="font-mono text-xs text-fg-muted">{ year }</p>
-          <Image src={`/screenshot/${img}`} alt="screenshot" className="mt-5 w-full border-2 border-fg" width={ 700 } height={400} />
+          <ModalMedia value={img} title={title} />
           <p className="mb-6 mt-5 leading-relaxed text-fg-muted">{ description }</p>
-          <a href={ url } target="_blank" rel="noreferrer" className="win-btn px-4 py-2">See Live Demo</a>
+          {url ? <a href={ url } target="_blank" rel="noreferrer" className="win-btn px-4 py-2">See Live Demo</a> : null}
         </Window>
       </div>
     </div>

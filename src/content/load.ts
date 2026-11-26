@@ -12,10 +12,15 @@ export const getSiteText = async (): Promise<SiteTextValues> => {
   return values
 }
 
-export const getServices = async () => {
-  const rows = await prisma.service.findMany({ orderBy: [{ position: 'asc' }, { id: 'asc' }] })
-  return {
-    en: rows.filter((r) => r.locale === 'en').map((r) => r.name),
-    jp: rows.filter((r) => r.locale === 'jp').map((r) => r.name),
-  }
-}
+// Name lists split by locale, in display order.
+type NameRow = { locale: string, name: string }
+const byLocale = (rows: NameRow[]) => ({
+  en: rows.filter((r) => r.locale === 'en').map((r) => r.name),
+  jp: rows.filter((r) => r.locale === 'jp').map((r) => r.name),
+})
+
+export const getInternalTools = async () =>
+  byLocale(await prisma.internalTool.findMany({ orderBy: [{ position: 'asc' }, { id: 'asc' }] }))
+
+export const getServices = async () =>
+  byLocale(await prisma.service.findMany({ orderBy: [{ position: 'asc' }, { id: 'asc' }] }))

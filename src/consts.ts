@@ -78,10 +78,20 @@ export const sectionLabels:sectionLabelsType = {
     en: 'PROJECTS',
     jp: 'プロジェクト'
   },
+  internalTools: {
+    en: 'INTERNAL TOOLS',
+    jp: '社内ツール'
+  },
   hire: {
     en: 'HIRE ME',
     jp: '採用方法'
   }
+}
+
+// Default text under the Internal Tools heading; edited in the dashboard.
+export const internalToolsDescription = {
+  en: 'Tools I have built for teams to use in their day-to-day work.',
+  jp: 'チームの日々の業務のために開発したツールです。',
 }
 
 // Labels for the right-hand section navigation (SideNav)
@@ -92,6 +102,7 @@ export const sideNavLabels: { [section: string]: { [locale: string]: string } } 
   about: { en: 'About', jp: '自己紹介' },
   experience: { en: 'Experience', jp: '経験' },
   project: { en: 'Projects', jp: 'プロジェクト' },
+  internalTools: { en: 'Internal Tools', jp: '社内ツール' },
   hire: { en: 'Hire Me', jp: '採用方法' },
 }
 
@@ -278,6 +289,10 @@ export const initialContentProps = {
     
   },
   service: {
+    en: [],
+    jp: []
+  },
+  internalTools: {
     en: [],
     jp: []
   },

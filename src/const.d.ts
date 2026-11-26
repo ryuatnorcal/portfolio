@@ -34,6 +34,7 @@ export interface ProjectModalType {
 export interface ProjectType {
   _id: string,
   title: string,
+  subtitle?: string | null,
   year: string,
   description: string,
   link: string,
@@ -138,6 +139,10 @@ export interface sectionLabelsType {
     [jp: string]: string
   },
   project: {
+    [en: string]: string,
+    [jp: string]: string
+  },
+  internalTools: {
     [en: string]: string,
     [jp: string]: string
   },

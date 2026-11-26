@@ -18,7 +18,7 @@ export const Tech = () => {
   const labels = t('section.tech')
   
   return (
-    <div className="flex w-10/12 flex-col justify-start py-[var(--section-padding-y)] md:w-8/12 xl:w-6/12">
+    <div className="flex w-11/12 flex-col justify-start py-[var(--section-padding-y)] md:w-8/12 xl:w-6/12">
       <SectionHeading index={`02 — ${labels}`} title={labels} />
       <TechIcons label={t('tech.frontend')} data={frontend && frontend[locale]} />
       <TechIcons label={t('tech.backend')} data={backend && backend[locale]} />

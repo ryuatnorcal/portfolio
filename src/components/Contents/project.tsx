@@ -9,8 +9,8 @@ export const Project = () => {
   const data = project && project[locale]
   const label = useText()('section.project')
   return (
-    <div className="flex w-10/12 flex-col justify-start py-[var(--section-padding-y)] md:w-8/12">
-      <SectionHeading index={`03 — ${label}`} title={label} />
+    <div className="flex w-11/12 flex-col justify-start py-[var(--section-padding-y)] md:w-8/12">
+      <SectionHeading index={`04 — ${label}`} title={label} />
       <ProjectItem data={data} />
     </div>
   )
