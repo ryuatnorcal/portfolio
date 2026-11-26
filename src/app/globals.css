@@ -140,6 +140,21 @@ a:hover {
   outline-offset: 2px;
 }
 
+/* Loading indicator: dots step on and off (no easing, like an old OS). */
+.loading-dot {
+  animation: loading-dot 1.2s steps(1, end) infinite;
+}
+
+@keyframes loading-dot {
+  0%, 100% { opacity: 0.15; }
+  33% { opacity: 1; }
+  66% { opacity: 0.15; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loading-dot { animation: none; opacity: 1; }
+}
+
 .icon-chip {
   width: 44px;
   height: 44px;

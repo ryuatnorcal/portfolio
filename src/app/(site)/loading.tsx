@@ -25,14 +25,17 @@ const Loading = () => {
   return (
     <div className="w-screen h-screen flex justify-center items-center flex-col">
 
-        <div
-          className="inline-block h-8 w-8 animate-spin border-4 border-solid border-current border-e-transparent align-[-0.125em] text-fg motion-reduce:animate-[spin_1.5s_linear_infinite]"
-          role="status">
-          <span
-            className="!absolute !-m-px !h-px !w-px !overflow-hidden !whitespace-nowrap !border-0 !p-0 ![clip:rect(0,0,0,0)]"
-          >
-            Loading...
-          </span>
+        {/* three square dots that light up in turn */}
+        <div className="flex gap-2" role="status">
+          {[0, 1, 2].map((i) => (
+            <span
+              key={i}
+              aria-hidden
+              className="loading-dot block h-3 w-3 bg-fg"
+              style={{ animationDelay: `${i * 0.4}s` }}
+            />
+          ))}
+          <span className="sr-only">Loading...</span>
         </div>
         <div className="mt-5 text-center font-mono text-sm tracking-wide text-fg-muted">
           <div>
