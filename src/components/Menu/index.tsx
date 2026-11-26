@@ -8,9 +8,12 @@ import logo from '../../../public/icons/barcode.gif'
 import menu from '../../../public/icons/icons8-menu.svg'
 import close from '../../../public/icons/icons8-close.svg'
 import './styles.css'
+
+// Element the nav stays light over; once scrolled past it the nav inverts.
+const BANNER_ID = 'hero-banner'
+
 const Menu = () => {
   const { locale, setLocale } = useLocale()
-  const { theme, toggleTheme } = useTheme()
   const [open, setOpen] = useState<boolean>(false)
   const [inverted, setInverted] = useState<boolean>(false)
   const navRef = useRef<HTMLElement>(null)
@@ -56,6 +59,15 @@ const Menu = () => {
     setOpen(!open)
   }
 
+  // Colours for a nav item; `active` is the current page.
+  const itemColors = (active = false) => {
+    if (inverted) return active ? 'text-black bg-white' : 'text-white bg-black hover:text-black hover:bg-white'
+    return active ? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'
+  }
+  const surface = inverted ? 'bg-black' : 'bg-white'
+  // logo and icons are black artwork: invert them on the dark nav
+  const iconFilter = `transition-[filter] duration-300 ${inverted ? 'invert' : ''}`
+
   return (
     <div className='w-screen overflow-hidden'>
       <nav ref={navRef} className={`flex w-screen overflow-x-hidden justify-between items-center pt-3 pb-3 px-10 fixed w-full z-50 transition-colors duration-300 ${surface}`}>
@@ -71,17 +83,17 @@ const Menu = () => {
         </div>
         <div onClick={handleMenu} className="lg:hidden">
           {open ?
-            <Image src={close} alt="close" className="cursor-pointer" />
-            : <Image src={menu} alt="menu" className="cursor-pointer" />
+            <Image src={close} alt="close" className={`cursor-pointer ${iconFilter}`} />
+            : <Image src={menu} alt="menu" className={`cursor-pointer ${iconFilter}`} />
           }
         </div>
       </nav>
       {/* Mobile menu below */}
-      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[74px] right-[-250px] bg-white z-50 ${open ? 'slideIn': 'slideOut'}`}>
-        <Link onClick={handleMenu} href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${pathname === '/'? 'text-white bg-black' : 'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Home</Link>
-        <Link onClick={handleMenu} href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${pathname === '/about'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>About</Link>
-        <Link onClick={handleMenu} href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block px-4 py-2 w-full ${pathname==='/contact'? 'text-white bg-black':'text-black bg-white hover:text-white hover:bg-black'} transition-colors duration-300`}>Contact</Link>
-        <button className="inline-block w-full text-black bg-white hover:text-white hover:bg-black transition-colors duration-300  px-4 py-2 text-left" onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
+      <div className={`lg:hidden fixed h-[92vh] w-[250px] top-[74px] right-[-250px] z-50 transition-colors duration-300 ${surface} ${open ? 'slideIn': 'slideOut'}`}>
+        <Link onClick={handleMenu} href={{ pathname: '/', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${itemColors(pathname === '/')} transition-colors duration-300`}>Home</Link>
+        <Link onClick={handleMenu} href={{ pathname: '/about', query: {selectedLocale:locale}}} className={`inline-block px-4 py-2 w-full ${itemColors(pathname === '/about')} transition-colors duration-300`}>About</Link>
+        <Link onClick={handleMenu} href={{ pathname: '/contact', query: { selectedLocale: locale } }} className={`inline-block px-4 py-2 w-full ${itemColors(pathname === '/contact')} transition-colors duration-300`}>Contact</Link>
+        <button className={`inline-block w-full ${itemColors()} transition-colors duration-300  px-4 py-2 text-left`} onClick={handleLocale}>{locale !== 'en' ? 'English' : '日本語'}</button>
       </div>
     </div>
   )
