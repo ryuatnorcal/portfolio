@@ -357,6 +357,8 @@ const LiquidBanner = ({ className = '', images = [] }: LiquidBannerProps) => {
     let disposed = false
     srcs.forEach((src, index) => {
       const img = new Image()
+      // remote images (R2) must be CORS-enabled to be used as WebGL textures
+      img.crossOrigin = 'anonymous'
       img.decoding = 'async'
       img.onload = () => {
         if (disposed) return
