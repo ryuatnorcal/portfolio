@@ -1,5 +1,6 @@
 import Menu from "@/components/Menu";
 import Footer from "@/components/Footer";
+import ReleaseNotes from "@/components/ReleaseNotes";
 import { LocaleProvider } from "@/hooks/useLocale";
 
 // Public pages: site menu and footer. The admin dashboard has its own layout.
@@ -17,6 +18,7 @@ export default function SiteLayout({
         </LocaleProvider>
       </div>
       <Footer />
+      <ReleaseNotes />
     </>
   );
 }
