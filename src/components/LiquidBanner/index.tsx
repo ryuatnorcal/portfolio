@@ -1,5 +1,5 @@
 'use client'
-import { useEffect, useRef } from "react"
+import { useEffect, useRef, useState } from "react"
 
 /**
  * Full-bleed WebGL hero background: photo 1 is shown liquid-warped under a
@@ -261,11 +261,26 @@ type LiquidBannerProps = {
   images?: string[]
 }
 
+// Phones and tablets (no hover, or a narrow screen) get a static first image:
+// the WebGL shader is too heavy for them.
+const STATIC_QUERY = '(max-width: 767px), (hover: none)'
+
 const LiquidBanner = ({ className = '', images = [] }: LiquidBannerProps) => {
   const imagesKey = images.join('|')
   const canvasRef = useRef<HTMLCanvasElement>(null)
+  // decided on the client only, so server and first client render match
+  const [mode, setMode] = useState<'pending' | 'static' | 'webgl'>('pending')
 
   useEffect(() => {
+    const mq = window.matchMedia(STATIC_QUERY)
+    const update = () => setMode(mq.matches ? 'static' : 'webgl')
+    update()
+    mq.addEventListener('change', update)
+    return () => mq.removeEventListener('change', update)
+  }, [])
+
+  useEffect(() => {
+    if (mode !== 'webgl') return
     const canvas = canvasRef.current
     if (!canvas) return
     const gl = canvas.getContext('webgl', { antialias: false, alpha: false })
@@ -577,7 +592,21 @@ const LiquidBanner = ({ className = '', images = [] }: LiquidBannerProps) => {
       gl.deleteShader(vs)
       gl.deleteShader(fs)
     }
-  }, [imagesKey])
+  }, [imagesKey, mode])
+
+  if (mode !== 'webgl') {
+    const first = images[0]
+    return (
+      <div aria-hidden="true" className={`block w-full h-full overflow-hidden bg-black ${className}`}>
+        {mode === 'static' && first && (
+          // eslint-disable-next-line @next/next/no-img-element -- URL may be on any host
+          <img src={first} alt="" decoding="async" className="h-full w-full object-cover brightness-[0.7]" />
+        )}
+        {/* vignette, matching the shader's darkening so the hero text stays readable */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,transparent_30%,rgba(0,0,0,0.6)_100%)]" />
+      </div>
+    )
+  }
 
   return (
     <canvas
