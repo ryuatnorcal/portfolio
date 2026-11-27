@@ -261,9 +261,10 @@ type LiquidBannerProps = {
   images?: string[]
 }
 
-// Phones and tablets (no hover, or a narrow screen) get a static first image:
-// the WebGL shader is too heavy for them.
-const STATIC_QUERY = '(max-width: 767px), (hover: none)'
+// Narrow screens (phones and portrait/small tablets) get a static first image:
+// the WebGL shader is too heavy for them. Decided by width only — `(hover: none)`
+// also matched some desktops (e.g. touchscreen laptops), disabling WebGL there.
+const STATIC_QUERY = '(max-width: 1023px)'
 
 const LiquidBanner = ({ className = '', images = [] }: LiquidBannerProps) => {
   const imagesKey = images.join('|')
@@ -284,14 +285,15 @@ const LiquidBanner = ({ className = '', images = [] }: LiquidBannerProps) => {
     const canvas = canvasRef.current
     if (!canvas) return
     const gl = canvas.getContext('webgl', { antialias: false, alpha: false })
-    if (!gl) return
+    // no WebGL (disabled, or the GPU is blocked): fall back to the static image
+    if (!gl) { setMode('static'); return }
 
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches
 
     // --- program ---
     const vs = compile(gl, gl.VERTEX_SHADER, VERT)
     const fs = compile(gl, gl.FRAGMENT_SHADER, FRAG)
-    if (!vs || !fs) return
+    if (!vs || !fs) { setMode('static'); return }
     const program = gl.createProgram()!
     gl.attachShader(program, vs)
     gl.attachShader(program, fs)
